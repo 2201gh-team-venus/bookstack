@@ -23,6 +23,7 @@ router.post('/', async (req, res, next) => {
 	try {
 		const userData = {
 			name: req.body.name,
+			username: req.body.username,
 			email: req.body.email,
 			password: req.body.password,
 			role: req.body.role || 'customer'
@@ -53,10 +54,10 @@ router.get('/admin', async (req, res, next) => {
 })
 
 /* Find users without admin access. */
-router.get('/customer', async (req, res, next) => {
+router.get('/users', async (req, res, next) => {
 	try {
-		const customers = await User.findAll({ role: 'customer' })
-		res.send(customers)
+		const users = await User.findAll({ role: 'user' })
+		res.send(users)
 	} catch (err) {
 		next(err)
 	}
@@ -77,6 +78,7 @@ router.put('/:userId', async (req, res, next) => {
 	try {
 		const userData = {
 			name: req.body.name,
+			username: req.body.username,
 			email: req.body.email,
 			password: req.body.password,
 			role: req.body.role
