@@ -12,7 +12,7 @@ const setBooks = (books) => {
 }
 
 // THUNK CREATOR
-export const fecthBooks = () => {
+export const fetchBooks = () => {
     return async (dispatch) => {
         const { data: books } = await axios.get('/api/books');
         dispatch(setBooks(books));
