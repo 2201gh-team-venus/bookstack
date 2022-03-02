@@ -30,7 +30,7 @@ router.post('/', async (req, res, next) => {
 		}
 
 		/* Checks if email already in database. */
-		const findEmail = await User.findOne({ where: req.body.email })
+		const findEmail = await User.findOne({ where: { email: req.body.email } })
 
 		if (findEmail) {
 			return res.sendStatus(406)
@@ -46,7 +46,7 @@ router.post('/', async (req, res, next) => {
 /* Find users with admin access. */
 router.get('/admin', async (req, res, next) => {
 	try {
-		const admins = await User.findAll({ role: 'admin' })
+		const admins = await User.findAll({ where: { role: 'admin' } })
 		res.send(admins)
 	} catch (err) {
 		next(err)
@@ -56,7 +56,7 @@ router.get('/admin', async (req, res, next) => {
 /* Find users without admin access. */
 router.get('/users', async (req, res, next) => {
 	try {
-		const users = await User.findAll({ role: 'user' })
+		const users = await User.findAll({ where: { role: 'user' } })
 		res.send(users)
 	} catch (err) {
 		next(err)
