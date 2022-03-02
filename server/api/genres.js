@@ -22,7 +22,7 @@ router.post('/', async (req, res, next) => {
 		if (genre) {
 			return res.sendStatus(406)
 		} else {
-			await genre.create({ name: req.body.name })
+			await Genre.create({ name: req.body.name })
 			res.sendStatus(201)
 		}
 	} catch (err) {
