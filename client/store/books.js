@@ -20,9 +20,11 @@ export const fetchBooks = () => {
 }
 
 // REDUCER
-export function booksReducer (state = [], action) {
+export default function booksReducer (state = [], action) {
     switch(action.type) {
         case SET_BOOKS:
             return action.books;
+        default:
+            return state;
     }
 }
