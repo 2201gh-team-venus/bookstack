@@ -66,8 +66,10 @@ router.get('/users', async (req, res, next) => {
 /* Find user by id. */
 router.get('/:userId', async (req, res, next) => {
 	try {
-		const user = await User.findById(req.params.userId)
-		res.json(user)
+		const user = await User.findByPk(req.params.userId)
+
+		if (user) return res.json(user)
+		else res.sendStatus(404) /* User not in database. */
 	} catch (err) {
 		next(err)
 	}
@@ -84,7 +86,7 @@ router.put('/:userId', async (req, res, next) => {
 			role: req.body.role
 		}
 
-		const user = await User.findById(req.params.userId)
+		const user = await User.findByPk(req.params.userId)
 
 		/* Checks if updating a valid user. */
 		if (!user) {
