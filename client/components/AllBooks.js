@@ -8,7 +8,7 @@ export class AllBooks extends React.Component {
     this.props.loadBooks();
   }
   render() {
-    if (this.props.books.length === 0 || !this.props.books) {
+    if (!this.props.books || this.props.books.length === 0) {
       return <h1>No Books!</h1>;
     }
     return (

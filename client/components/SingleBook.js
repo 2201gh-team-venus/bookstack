@@ -8,8 +8,11 @@ class SingleBook extends React.Component {
     }
 
     render() {
+        if (!this.props.book) {
+            return <h1>No book found</h1>
+        }
+        
         const {name, author, description, imageURL, price} = this.props.book
-
         return (
             <div>
                 <img src={imageURL}/>
