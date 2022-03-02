@@ -8,7 +8,6 @@ export class AllBooks extends React.Component {
     this.props.loadBooks();
   }
   render() {
-    console.log(this.props.books);
     if (!this.props.books || this.props.books.length === 0) {
       return <h1>No Books!</h1>;
     }
@@ -22,7 +21,7 @@ export class AllBooks extends React.Component {
               <Link to={`/books/${book.id}`}>
                 <h3>{book.name}</h3>
               </Link>
-              {/*Include Author name and genre for book*/}
+              <h4>{book.author.name}</h4>
             </div>
           ))}
         </div>
