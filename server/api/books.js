@@ -57,7 +57,7 @@ router.get('/:bookId', async (req, res, next) => {
 })
 
 /* Update book. */
-router.put('/:bookId', async (res, res, next) => {
+router.put('/:bookId', async (req, res, next) => {
 	try {
 		const bookData = {
 			name: req.body.name,
@@ -80,7 +80,7 @@ router.put('/:bookId', async (res, res, next) => {
 })
 
 /* Remove book. */
-router.delete('/:bookId', async (res, res, next) => {
+router.delete('/:bookId', async (req, res, next) => {
 	try {
 		const book = await Book.findByPk(req.params.bookId)
 
