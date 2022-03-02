@@ -5,7 +5,7 @@ import { fetchBooks } from "../store/books";
 
 export class AllBooks extends React.Component {
   componentDidMount() {
-    this.props.fetchBooks();
+    this.props.loadBooks();
   }
   render() {
     if (this.props.books.length === 0 || !this.props.books) {
@@ -36,7 +36,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchBooks: () => dispatch(fetchBooks()),
+    loadBooks: () => dispatch(fetchBooks()),
   };
 };
 
