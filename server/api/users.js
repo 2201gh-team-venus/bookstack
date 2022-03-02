@@ -90,7 +90,7 @@ router.put('/:userId', async (req, res, next) => {
 
 		/* Checks if updating a valid user. */
 		if (user) {
-			await User.update({ ...userData })
+			await user.update({ ...userData })
 			return res.sendStatus(200)
 		} else {
 			res.sendStatus(404)
