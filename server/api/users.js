@@ -89,10 +89,11 @@ router.put('/:userId', async (req, res, next) => {
 		const user = await User.findByPk(req.params.userId)
 
 		/* Checks if updating a valid user. */
-		if (!user) {
-			return res.sendStatus(404)
-		} else {
+		if (user) {
 			await User.update({ ...userData })
+			return res.sendStatus(200)
+		} else {
+			res.sendStatus(404)
 		}
 	} catch (err) {
 		next(err)
@@ -102,7 +103,7 @@ router.put('/:userId', async (req, res, next) => {
 /* Remove user. */
 router.delete('/:userId', async (req, res, next) => {
 	try {
-		const user = await User.findByPk(req.body.userId)
+		const user = await User.findByPk(req.params.userId)
 
 		if (user) {
 			User.destroy({ where: { id: user.id } })
