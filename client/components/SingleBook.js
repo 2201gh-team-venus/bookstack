@@ -25,10 +25,8 @@ class SingleBook extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        book: state.book,
-    };
+const mapStateToProps = ({ book }) => {
+    return { book };
 };
 
 const mapDispatchToProps = (dispatch) => {

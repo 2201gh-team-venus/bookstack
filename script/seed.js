@@ -19,7 +19,7 @@ async function seed() {
   ])
 
   // Creating Authors
-  const authors = await Promise.all([
+  const [author1, author2, author3, author4, author5, author6, author7] = await Promise.all([
     Author.create({ name: 'J.K. Rowling', bio: 'Joanne Rowling, known by her pen name J.K. Rowling, is a British author, philanthropist, film producer, and screenwriter.' }),
     Author.create({ name: 'Ernest Hemingway', bio: 'Ernest Miller Hemingway was an American novelist, short-story writer, journalist, and sportsman. '}),
     Author.create({ name: 'Hakuri Murakami', bio: 'Haruki Murakami is a Japanese writer. His novels, essays, and short stories have been bestsellers in Japan as well as internationally, with his work translated into 50 languages and selling millions of copies outside Japan. '}),
@@ -30,7 +30,7 @@ async function seed() {
   ])
 
   // Creating Books
-  const books = await Promise.all([
+  const [book1, book2, book3, book4] = await Promise.all([
     Book.create({ name: 'The Giving Tree', imageURL: 'https://upload.wikimedia.org/wikipedia/en/7/79/The_Giving_Tree.jpg', description: 'Every day the boy would come to the tree to eat her apples, swing from her branches, or slide down her trunk...and the tree was happy. But as the boy grew older he began to want more from the tree, and the tree gave and gave and gave. This is a tender story, touched with sadness, aglow with consolation.', inventory: 8, price: 16.19 }),
     Book.create({ name: 'Harry Potter and the Order of the Phoenix', imageURL: 'https://images-na.ssl-images-amazon.com/images/I/51lFAzVQUxL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg', description: "As his fifth year at Hogwarts School of Witchcraft and Wizardry approaches, 15-year-old Harry Potter is in full-blown adolescence, complete with regular outbursts of rage, a nearly debilitating crush, and the blooming of a powerful sense of rebellion. It's been yet another infuriating and boring summer with the despicable Dursleys, this time with minimal contact from our hero's non-Muggle friends from school. Harry is feeling especially edgy at the lack of news from the magic world, wondering when the freshly revived evil Lord Voldemort will strike.", inventory: 4, price: 13.69 }),
     Book.create({ name: 'Lord of the Rings: The Fellowship of the Ring', imageURL: 'https://images-na.ssl-images-amazon.com/images/I/41gHG-a2OEL._SX331_BO1,204,203,200_.jpg', description: "The first volume in J.R.R. Tolkien's epic adventure THE LORD OF THE RINGS One Ring to rule them all, One Ring to find them, One Ring to bring them all and in the darkness bind them.", inventory: 6, price: 10.09 }),
@@ -42,8 +42,15 @@ async function seed() {
     Genre.create({ name: 'Sci Fi' }), Genre.create({ name: 'Children'}), Genre.create({ name: 'Fantasy'})
   ])
 
+  // Adding Author-Book Association
+  await author1.addBook(book2);
+  await author4.addBook(book3);
+  await author5.addBook(book4);
+  await author7.addBook(book1);
+  
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
+
 }
 
 /*

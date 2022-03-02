@@ -47,7 +47,7 @@ router.post('/', async (req, res, next) => {
 /* Find by bookId. */
 router.get('/:bookId', async (req, res, next) => {
 	try {
-		const book = await Book.findByPk(req.params.bookId)
+		const book = await Book.findByPk(req.params.bookId, { include: Author })
 
 		if (book) return res.json(book)
 		else res.sendStatus(404) /* Book not in database. */

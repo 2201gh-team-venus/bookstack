@@ -8,8 +8,8 @@ import singleBookReducer from './singleBook';
 
 const reducer = combineReducers({ 
   auth,
-  booksReducer, 
-  singleBookReducer
+  books: booksReducer, 
+  book: singleBookReducer
 });
 
 const middleware = composeWithDevTools(
