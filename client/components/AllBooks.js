@@ -8,15 +8,16 @@ export class AllBooks extends React.Component {
     this.props.loadBooks();
   }
   render() {
+    console.log(this.props.books);
     if (!this.props.books || this.props.books.length === 0) {
       return <h1>No Books!</h1>;
     }
     return (
       <div>
         <h1>All Books</h1>
-        <div>
+        <div className="books">
           {this.props.books.map((book) => (
-            <div className="book" key={book.id}>
+            <div className="single-book" key={book.id}>
               <img src={book.imageURL} />
               <Link to={`/books/${book.id}`}>
                 <h3>{book.name}</h3>
@@ -30,8 +31,8 @@ export class AllBooks extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return { books: state.books };
+const mapStateToProps = ({ books }) => {
+  return { books };
 };
 
 const mapDispatchToProps = (dispatch) => {
