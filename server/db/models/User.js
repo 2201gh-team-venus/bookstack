@@ -2,28 +2,29 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const dotenv = require("dotenv").config();
 const axios = require('axios')
 
 const SALT_ROUNDS = 5
 
 const User = db.define('user', {
-	name: {
-		type: Sequelize.STRING,
-		allowNull: false
-	},
+	// name: {
+	// 	type: Sequelize.STRING
+	// },
 	username: {
 		type: Sequelize.STRING,
 		allowNull: false
 	},
-	email: {
-		type: Sequelize.STRING,
-		allowNull: false,
-		validate: {
-			isEmail: true
-		}
-	},
+	// email: {
+	// 	type: Sequelize.STRING,
+	// 	allowNull: false,
+	// 	validate: {
+	// 		isEmail: true
+	// 	}
+	// },
 	password: {
 		type: Sequelize.STRING,
+		allowNull: false
 		// validate: {
 		// 	is: /^[0-9a-f]{64}$/i
 		// }
@@ -33,25 +34,26 @@ const User = db.define('user', {
 	}
 })
 
-module.exports = User
-
 /**
  * instanceMethods
  */
+
+const secretSigningPhrase = process.env.BOOKSTACK_AUTH_JWT
+
 User.prototype.correctPassword = function (candidatePwd) {
 	//we need to compare the plain version to an encrypted version of the password
 	return bcrypt.compare(candidatePwd, this.password)
 }
 
 User.prototype.generateToken = function () {
-	return jwt.sign({ id: this.id }, process.env.JWT)
+	return jwt.sign({ id: this.id }, secretSigningPhrase)
 }
 
 /**
  * classMethods
  */
-User.authenticate = async function ({ name, password }) {
-	const User = await this.findOne({ where: { name } })
+User.authenticate = async function ({ username, password }) {
+	const User = await this.findOne({ where: { username } })
 	if (!User || !(await User.correctPassword(password))) {
 		const error = Error('Incorrect name and/or password combination. Please try again.')
 		error.status = 401
@@ -62,12 +64,13 @@ User.authenticate = async function ({ name, password }) {
 
 User.findByToken = async function (token) {
 	try {
-		const { id } = await jwt.verify(token, process.env.JWT)
-		const User = User.findByPk(id)
-		if (!User) {
+		const { id } = jwt.verify(token, secretSigningPhrase)
+		const user = await User.findByPk(id)
+
+		if (!user) {
 			throw 'nooo'
 		}
-		return User
+		return user
 	} catch (ex) {
 		const error = Error('bad token')
 		error.status = 401
@@ -88,3 +91,5 @@ const hashPassword = async User => {
 User.beforeCreate(hashPassword)
 User.beforeUpdate(hashPassword)
 User.beforeBulkCreate(Users => Promise.all(Users.map(hashPassword)))
+
+module.exports = User
