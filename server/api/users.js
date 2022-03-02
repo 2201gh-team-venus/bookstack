@@ -3,7 +3,7 @@ const {
 	models: { User }
 } = require('../db')
 
-/* Find one user. */
+/* Find all users. */
 router.get('/', async (req, res, next) => {
 	try {
 		const users = await User.findAll({
@@ -30,7 +30,7 @@ router.post('/', async (req, res, next) => {
 		}
 
 		/* Checks if email already in database. */
-		const findEmail = await User.findOne({ where: req.body.email })
+		const findEmail = await User.findOne({ where: { email: req.body.email } })
 
 		if (findEmail) {
 			return res.sendStatus(406)
@@ -46,7 +46,7 @@ router.post('/', async (req, res, next) => {
 /* Find users with admin access. */
 router.get('/admin', async (req, res, next) => {
 	try {
-		const admins = await User.findAll({ role: 'admin' })
+		const admins = await User.findAll({ where: { role: 'admin' } })
 		res.send(admins)
 	} catch (err) {
 		next(err)
@@ -56,7 +56,7 @@ router.get('/admin', async (req, res, next) => {
 /* Find users without admin access. */
 router.get('/users', async (req, res, next) => {
 	try {
-		const users = await User.findAll({ role: 'user' })
+		const users = await User.findAll({ where: { role: 'user' } })
 		res.send(users)
 	} catch (err) {
 		next(err)
@@ -66,8 +66,10 @@ router.get('/users', async (req, res, next) => {
 /* Find user by id. */
 router.get('/:userId', async (req, res, next) => {
 	try {
-		const user = await User.findById(req.params.userId)
-		res.json(user)
+		const user = await User.findByPk(req.params.userId)
+
+		if (user) return res.json(user)
+		else res.sendStatus(404) /* User not in database. */
 	} catch (err) {
 		next(err)
 	}
@@ -84,13 +86,14 @@ router.put('/:userId', async (req, res, next) => {
 			role: req.body.role
 		}
 
-		const user = await User.findById(req.params.userId)
+		const user = await User.findByPk(req.params.userId)
 
 		/* Checks if updating a valid user. */
-		if (!user) {
-			return res.sendStatus(404)
-		} else {
+		if (user) {
 			await User.update({ ...userData })
+			return res.sendStatus(200)
+		} else {
+			res.sendStatus(404)
 		}
 	} catch (err) {
 		next(err)
@@ -100,7 +103,7 @@ router.put('/:userId', async (req, res, next) => {
 /* Remove user. */
 router.delete('/:userId', async (req, res, next) => {
 	try {
-		const user = await User.findByPk(req.body.userId)
+		const user = await User.findByPk(req.params.userId)
 
 		if (user) {
 			User.destroy({ where: { id: user.id } })
