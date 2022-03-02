@@ -26,7 +26,7 @@ router.post('/', async (req, res, next) => {
 			username: req.body.username,
 			email: req.body.email,
 			password: req.body.password,
-			role: req.body.role || 'customer'
+			role: req.body.role || 'user'
 		}
 
 		/* Checks if email already in database. */
@@ -47,7 +47,7 @@ router.post('/', async (req, res, next) => {
 router.get('/admin', async (req, res, next) => {
 	try {
 		const admins = await User.findAll({ where: { role: 'admin' } })
-		res.send(admins)
+		res.json(admins)
 	} catch (err) {
 		next(err)
 	}
@@ -57,7 +57,7 @@ router.get('/admin', async (req, res, next) => {
 router.get('/users', async (req, res, next) => {
 	try {
 		const users = await User.findAll({ where: { role: 'user' } })
-		res.send(users)
+		res.json(users)
 	} catch (err) {
 		next(err)
 	}
