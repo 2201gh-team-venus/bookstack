@@ -3,7 +3,7 @@ const {
 	models: { User }
 } = require('../db')
 
-/* Find one user. */
+/* Find all users. */
 router.get('/', async (req, res, next) => {
 	try {
 		const users = await User.findAll({
