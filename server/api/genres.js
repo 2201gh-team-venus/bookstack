@@ -56,8 +56,12 @@ router.put('/:genreId', async (req, res, next) => {
 		const genre = await Genre.findByPk(req.params.genreId)
 
 		/* Checks if updating a valid genre. */
-		if (genre) await Genre.update({ name: req.body.name })
-		else res.sendStatus(404)
+		if (genre) {
+			await genre.update({ name: req.body.name })
+			return res.sendStatus(200)
+		} else {
+			res.sendStatus(404)
+		}
 	} catch (err) {
 		next(err)
 	}

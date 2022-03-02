@@ -63,7 +63,8 @@ router.put('/:bookId', async (req, res, next) => {
 			name: req.body.name,
 			imageURL: req.body.imageURL,
 			description: req.body.description,
-			inventory: req.body.inventory
+			inventory: req.body.inventory,
+			price: req.body.price
 		}
 
 		const book = await Book.findByPk(req.params.bookId)
