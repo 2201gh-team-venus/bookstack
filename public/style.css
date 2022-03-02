@@ -19,3 +19,20 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+.books {
+  display: flex;
+  justify-content: center;
+}
+
+.single-book {
+  width: 400px;
+  height: 350px;
+  text-align: center;
+}
+
+.single-book img {
+  width: 200px;
+  height: 300px;
+  align-self: center;
+}
