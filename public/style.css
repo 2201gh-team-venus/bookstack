@@ -37,3 +37,20 @@ form div {
   height: 300px;
   align-self: center;
 }
+
+.book {
+  display: flex;
+  justify-content: center;
+}
+
+.book img {
+  width: 300px;
+  height: 450px;
+  margin: 10px;
+}
+
+.book-info {
+  width: 450px;
+  margin-left: 40px;
+}
+
