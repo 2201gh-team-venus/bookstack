@@ -1,6 +1,6 @@
 'use strict'
 
-const {db, models: {User, Author, Book, Genre } } = require('../server/db')
+const {db, models: {User, Author, Book, Genre, Comment } } = require('../server/db')
 
 /**
  * seed - this function clears the database, updates tables to
@@ -11,11 +11,13 @@ async function seed() {
   console.log('db synced!')
 
   // Creating Users
-  const users = await Promise.all([
+  const [user1, user2, user3, user4, user5, user6] = await Promise.all([
     User.create({ name: 'Cody', username: 'cody', email: 'cody@cody.com', password: 'banana', role: 'user' }),
     User.create({ name: 'Arthur', username: 'arthur', email: 'arthur@arthur.com', password: 'chocolate', role: 'user' }),
     User.create({ name: 'Daniel', username: 'daniel', email: 'daniel@daniel.com', password: 'pineapple', role: 'user' }),
     User.create({ name: 'HandsomeBob', username: 'handsomeBob', email: 'bob@handsomebob.com', password: 'cat', role: 'admin' }),
+    User.create({ name: 'Joe', username: 'joe', email: 'joe@joe.com', password: 'penny', role: 'admin' }),
+    User.create({ name: 'Rusty', username: 'rusty', email: 'rusty@rusty.com', password: 'callum', role: 'admin' }),
   ])
 
   // Creating Authors
@@ -42,11 +44,23 @@ async function seed() {
     Genre.create({ name: 'Sci Fi' }), Genre.create({ name: 'Children'}), Genre.create({ name: 'Fantasy'})
   ])
 
+  const [comment1, comment2, commment3, comment4] =  await Promise.all([
+    Comment.create({message: 'This is the best book in the series!!!'}), Comment.create({message: 'I like the movie better.'}), Comment.create({message: 'I would buy this again!'}), Comment.create({message: 'I cannot wait till they make this book an anime!'})
+  ])
+
   // Adding Author-Book Association
   await author1.addBook(book2);
   await author4.addBook(book3);
   await author5.addBook(book4);
   await author7.addBook(book1);
+
+  await book2.addComment(comment1)
+  await book2.addComment(comment2)
+  await book2.addComment(comment4)
+
+  await user5.addComment(comment2)
+  await user6.addComment(comment4)
+
   
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
