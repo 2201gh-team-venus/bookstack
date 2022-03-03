@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchSingleBook } from "../store/singleBook";
+import CommentList from "./CommentsList"
 
 class SingleBook extends React.Component {
     componentDidMount() {
@@ -12,9 +13,11 @@ class SingleBook extends React.Component {
             return <h1>No book found</h1>
         }
         
-        const book = this.props.book || [];
-        const {name, description, imageURL, price} = book;
+        const {name, description, imageURL, price} = this.props.book;
         const author = this.props.book.author || {};
+        const comments = this.props.book.comments || []; //check with Pamela for keys!!!
+        
+
        
         return (
             <div>
@@ -23,6 +26,8 @@ class SingleBook extends React.Component {
                 <h5>{author.name}</h5>
                 <h5>{price}</h5>
                 <p>{description}</p>
+                <h4>Reviews:</h4>
+                <CommentList comments={comments}/> {/*check if this works!*/}
             </div>
 
         )
