@@ -11,18 +11,22 @@ class SingleBook extends React.Component {
         if (!this.props.book) {
             return <h1>No book found</h1>
         }
-        
-        const book = this.props.book || [];
-        const {name, description, imageURL, price} = book;
+
+        const { name, description, imageURL, price } = this.props.book;
         const author = this.props.book.author || {};
-       
+
         return (
-            <div>
-                <img src={imageURL}/>
-                <h3>{name}</h3>
-                <h5>{author.name}</h5>
-                <h5>{price}</h5>
-                <p>{description}</p>
+            <div className="book">
+                <img src={imageURL} />
+                <div className="book-info">
+                    <h3>{name}</h3>
+                    <h5>By: {author.name}</h5>
+                    <p>{description}</p>
+                    <h3>${price}</h3>
+                    <button>Add To Cart</button>
+                </div>
+
+                
             </div>
 
         )
