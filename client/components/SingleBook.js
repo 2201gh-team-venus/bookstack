@@ -12,15 +12,19 @@ class SingleBook extends React.Component {
             return <h1>No book found</h1>
         }
         
-        const {name, author, description, imageURL, price} = this.props.book
+        const book = this.props.book || [];
+        const {name, description, imageURL, price} = book;
+        const author = this.props.book.author || {};
+       
         return (
             <div>
                 <img src={imageURL}/>
                 <h3>{name}</h3>
-                <h5>{author}</h5>
+                <h5>{author.name}</h5>
                 <h5>{price}</h5>
                 <p>{description}</p>
             </div>
+
         )
     }
 }
