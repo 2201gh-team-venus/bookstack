@@ -22,13 +22,14 @@ form div {
 
 .books {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
 }
 
 .single-book {
-  width: 400px;
+  width: 375px;
   height: 350px;
   text-align: center;
+  padding: 5px;
 }
 
 .single-book img {
@@ -36,3 +37,20 @@ form div {
   height: 300px;
   align-self: center;
 }
+
+.book {
+  display: flex;
+  justify-content: center;
+}
+
+.book img {
+  width: 300px;
+  height: 450px;
+  margin: 10px;
+}
+
+.book-info {
+  width: 450px;
+  margin-left: 40px;
+}
+
