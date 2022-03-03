@@ -1,7 +1,7 @@
-import React from "react";
-import { connect } from "react-redux";
-import { fetchSingleBook } from "../store/singleBook";
-import CommentList from "./CommentsList";
+import React from 'react';
+import { connect } from 'react-redux';
+import { fetchSingleBook } from '../store/singleBook';
+import CommentList from './CommentsList';
 
 class SingleBook extends React.Component {
 	componentDidMount() {
@@ -16,8 +16,7 @@ class SingleBook extends React.Component {
 		const { name, description, imageURL, price } = this.props.book;
 		const author = this.props.book.author || {};
 		const comments = this.props.book.comments || []; //check with Pamela for keys!!!
-		console.log("this.props: --->", this.props);
-		console.log("COMMENTS HERE!!!, SINGLEBOOK --->", comments);
+
 		return (
 			<div className="book">
 				<img src={imageURL} />

@@ -1,34 +1,34 @@
-const router = require('express').Router()
+const router = require('express').Router();
 const {
 	models: { Genre, Book }
-} = require('../db')
+} = require('../db');
 
 /* Find all genre. */
 router.get('/', async (req, res, next) => {
 	try {
-		const genres = await Genre.findAll({ include: Book })
-		res.json(genres)
+		const genres = await Genre.findAll({ include: Book });
+		res.json(genres);
 	} catch (err) {
-		next(err)
+		next(err);
 	}
-})
+});
 
 /* Add genre. */
 router.post('/', async (req, res, next) => {
 	try {
 		/* Checks if genre already in database. */
-		const genre = await Genre.findOne({ where: { name: req.body.name } })
+		const genre = await Genre.findOne({ where: { name: req.body.name } });
 
 		if (genre) {
-			return res.sendStatus(406)
+			return res.sendStatus(406);
 		} else {
-			await Genre.create({ name: req.body.name })
-			res.sendStatus(201)
+			await Genre.create({ name: req.body.name });
+			res.sendStatus(201);
 		}
 	} catch (err) {
-		next(err)
+		next(err);
 	}
-})
+});
 
 /* Find books in genre. */
 // router.get('/:genreId/books', async (req, res, next) => {
@@ -41,45 +41,45 @@ router.post('/', async (req, res, next) => {
 /* Find by genreId */
 router.get('/:genreId', async (req, res, next) => {
 	try {
-		const genre = await Genre.findByPk(req.params.genreId, { include: Book })
+		const genre = await Genre.findByPk(req.params.genreId, { include: Book });
 
-		if (genre) return res.json(genre)
-		else res.sendStatus(404) /* Genre not in database. */
+		if (genre) return res.json(genre);
+		else res.sendStatus(404); /* Genre not in database. */
 	} catch (err) {
-		next(err)
+		next(err);
 	}
-})
+});
 
 /* Update genre. */
 router.put('/:genreId', async (req, res, next) => {
 	try {
-		const genre = await Genre.findByPk(req.params.genreId)
+		const genre = await Genre.findByPk(req.params.genreId);
 
 		/* Checks if updating a valid genre. */
 		if (genre) {
-			await genre.update({ name: req.body.name })
-			return res.sendStatus(200)
+			await genre.update({ name: req.body.name });
+			return res.sendStatus(200);
 		} else {
-			res.sendStatus(404)
+			res.sendStatus(404);
 		}
 	} catch (err) {
-		next(err)
+		next(err);
 	}
-})
+});
 
 router.delete('/:genreId', async (req, res, next) => {
 	try {
-		const genre = await Genre.findByPk(req.params.genreId)
+		const genre = await Genre.findByPk(req.params.genreId);
 
 		if (genre) {
-			Genre.destroy({ where: { id: genre.id } })
-			res.sendStatus(200)
+			Genre.destroy({ where: { id: genre.id } });
+			res.sendStatus(200);
 		} else {
-			res.sendStatus(404)
+			res.sendStatus(404);
 		}
 	} catch (err) {
-		next(err)
+		next(err);
 	}
-})
+});
 
-module.exports = router
+module.exports = router;

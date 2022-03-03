@@ -95,11 +95,11 @@ async function seed() {
 	// Creating Books
 	const [book1, book2, book3, book4] = await Promise.all([
 		Book.create({
-			name: "The Giving Tree",
+			name: 'The Giving Tree',
 			imageURL:
-				"https://upload.wikimedia.org/wikipedia/en/7/79/The_Giving_Tree.jpg",
+				'https://upload.wikimedia.org/wikipedia/en/7/79/The_Giving_Tree.jpg',
 			description:
-				"Every day the boy would come to the tree to eat her apples, swing from her branches, or slide down her trunk...and the tree was happy. But as the boy grew older he began to want more from the tree, and the tree gave and gave and gave. This is a tender story, touched with sadness, aglow with consolation.",
+				'Every day the boy would come to the tree to eat her apples, swing from her branches, or slide down her trunk...and the tree was happy. But as the boy grew older he began to want more from the tree, and the tree gave and gave and gave. This is a tender story, touched with sadness, aglow with consolation.',
 			inventory: 8,
 			price: 16.19
 		}),
@@ -169,7 +169,7 @@ async function seed() {
  The `seed` function is concerned only with modifying the database.
 */
 async function runSeed() {
-	console.log("seeding...")
+console.log("seeding...")
 	try {
 		await seed()
 	} catch (err) {
@@ -179,6 +179,7 @@ async function runSeed() {
 		console.log("closing db connection")
 		await db.close()
 		console.log("db connection closed")
+
 	}
 }
 
@@ -188,8 +189,7 @@ async function runSeed() {
   any errors that might occur inside of `seed`.
 */
 if (module === require.main) {
+// we export the seed function for testing purposes (see `./seed.spec.js`)
+module.exports = seed;
 	runSeed()
 }
-
-// we export the seed function for testing purposes (see `./seed.spec.js`)
-module.exports = seed

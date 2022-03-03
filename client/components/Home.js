@@ -1,5 +1,5 @@
-import React from 'react'
-import {connect} from 'react-redux'
+import React from 'react';
+import { connect } from 'react-redux';
 
 /**
  * COMPONENT
@@ -19,9 +19,9 @@ export const Home = props => {
  * CONTAINER
  */
 const mapState = state => {
-  return {
-    username: state.auth.username
-  }
-}
+	return {
+		username: state.auth.username
+	};
+};
 
-export default connect(mapState)(Home)
+export default connect(mapState)(Home);
