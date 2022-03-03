@@ -1,11 +1,11 @@
-const Sequelize = require('sequelize')
-const db = require('../db')
-const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt')
-const dotenv = require("dotenv").config();
-const axios = require('axios')
+const Sequelize = require('sequelize');
+const db = require('../db');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const dotenv = require('dotenv').config();
+const axios = require('axios');
 
-const SALT_ROUNDS = 5
+const SALT_ROUNDS = 5;
 
 const User = db.define('user', {
 	// name: {
@@ -32,51 +32,53 @@ const User = db.define('user', {
 	role: {
 		type: Sequelize.ENUM('user', 'admin')
 	}
-})
+});
 
 /**
  * instanceMethods
  */
 
-const secretSigningPhrase = process.env.BOOKSTACK_AUTH_JWT
+const secretSigningPhrase = process.env.BOOKSTACK_AUTH_JWT;
 
 User.prototype.correctPassword = function (candidatePwd) {
 	//we need to compare the plain version to an encrypted version of the password
-	return bcrypt.compare(candidatePwd, this.password)
-}
+	return bcrypt.compare(candidatePwd, this.password);
+};
 
 User.prototype.generateToken = function () {
-	return jwt.sign({ id: this.id }, secretSigningPhrase)
-}
+	return jwt.sign({ id: this.id }, secretSigningPhrase);
+};
 
 /**
  * classMethods
  */
 User.authenticate = async function ({ username, password }) {
-	const User = await this.findOne({ where: { username } })
+	const User = await this.findOne({ where: { username } });
 	if (!User || !(await User.correctPassword(password))) {
-		const error = Error('Incorrect name and/or password combination. Please try again.')
-		error.status = 401
-		throw error
+		const error = Error(
+			'Incorrect name and/or password combination. Please try again.'
+		);
+		error.status = 401;
+		throw error;
 	}
-	return User.generateToken()
-}
+	return User.generateToken();
+};
 
 User.findByToken = async function (token) {
 	try {
-		const { id } = jwt.verify(token, secretSigningPhrase)
-		const user = await User.findByPk(id)
+		const { id } = jwt.verify(token, secretSigningPhrase);
+		const user = await User.findByPk(id);
 
 		if (!user) {
-			throw 'nooo'
+			throw 'nooo';
 		}
-		return user
+		return user;
 	} catch (ex) {
-		const error = Error('bad token')
-		error.status = 401
-		throw error
+		const error = Error('bad token');
+		error.status = 401;
+		throw error;
 	}
-}
+};
 
 /**
  * hooks
@@ -84,12 +86,12 @@ User.findByToken = async function (token) {
 const hashPassword = async User => {
 	//in case the password has been changed, we want to encrypt it with bcrypt
 	if (User.changed('password')) {
-		User.password = await bcrypt.hash(User.password, SALT_ROUNDS)
+		User.password = await bcrypt.hash(User.password, SALT_ROUNDS);
 	}
-}
+};
 
-User.beforeCreate(hashPassword)
-User.beforeUpdate(hashPassword)
-User.beforeBulkCreate(Users => Promise.all(Users.map(hashPassword)))
+User.beforeCreate(hashPassword);
+User.beforeUpdate(hashPassword);
+User.beforeBulkCreate(Users => Promise.all(Users.map(hashPassword)));
 
-module.exports = User
+module.exports = User;
