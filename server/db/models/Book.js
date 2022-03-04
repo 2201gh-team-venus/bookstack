@@ -16,10 +16,13 @@ const Book = db.define('book', {
 	},
 	inventory: {
 		type: Sequelize.INTEGER,
-		allowNull: false
+		allowNull: false,
+		validate: {
+			min: 0
+		}
 	},
 	price: {
-		type: Sequelize.FLOAT,
+		type: Sequelize.DECIMAL,
 		allowNull: false
 	}
 });
