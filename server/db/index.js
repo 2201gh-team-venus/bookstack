@@ -1,5 +1,4 @@
 //this is the access point for all things database related!
-const Sequelize = require('sequelize');
 const db = require('./db');
 
 const Author = require('./models/Author');
@@ -10,7 +9,7 @@ const Genre = require('./models/Genre');
 const Cart = require('./models/Cart');
 const User = require('./models/User');
 
-//associations could go here!
+// ASSOCIATIONS
 
 // Book has authorID as FK
 Author.hasMany(Book);
@@ -24,40 +23,17 @@ Comment.belongsTo(User);
 Book.hasMany(Comment);
 Comment.belongsTo(Book);
 
-// CartItem has cartID as FK
-// Cart.hasMany(CartItem);
-// CartItem.belongsTo(Cart);
-
 // Cart has userID as FK
 User.hasMany(Cart);
 Cart.belongsTo(User);
 
-// Cart has CartItem as FK
-// CartItem.hasMany(Cart);
-// Cart.belongsTo(CartItem);
-
-// CartItem has bookID as FK
-// Book.hasMany(CartItem);
-// CartItem.belongsTo(Book);
-
+// book_genre has genreID and bookID as FK
 Book.belongsToMany(Genre, { through: 'book_genre' });
 Genre.belongsToMany(Book, { through: 'book_genre' });
 
-const CartItemTest = db.define('cart_item_test', {
-	id: {
-		type: Sequelize.INTEGER,
-		primaryKey: true,
-		autoIncrement: true,
-		allowNull: false
-	},
-	quantity: {
-		type: Sequelize.INTEGER,
-		allowNull: false
-	}
-})
-
-Book.belongsToMany(Cart, { through: CartItemTest, foreignKey: 'books_id' });
-Cart.belongsToMany(Book, { through: CartItemTest, foreignKey: 'carts_id' });
+// CartItem has bookID and cartID as FK
+Book.belongsToMany(Cart, { through: CartItem, foreignKey: 'books_id' });
+Cart.belongsToMany(Book, { through: CartItem, foreignKey: 'carts_id' });
 
 module.exports = {
 	db,
@@ -65,7 +41,6 @@ module.exports = {
 		Author,
 		Book,
 		CartItem,
-		CartItemTest,
 		Comment,
 		Genre,
 		Cart,
