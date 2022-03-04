@@ -165,7 +165,7 @@ async function seed() {
 			price: 13.86
 		}),
 		Book.create({
-			name: "Harry Poter And The Chamber Of Secrets",
+			name: "Harry Potter And The Chamber Of Secrets",
 			imageURL:
 				"https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1474169725l/15881._SY475_.jpg",
 			description:
@@ -209,7 +209,7 @@ async function seed() {
 		Genre.create({ name: "Fantasy" })
 	])
 
-	const [comment1, comment2, commment3, comment4] = await Promise.all([
+	const [comment1, comment2, comment3, comment4] = await Promise.all([
 		Comment.create({ message: "This is the best book in the series!!!" }),
 		Comment.create({ message: "I like the movie better." }),
 		Comment.create({ message: "I would buy this again!" }),

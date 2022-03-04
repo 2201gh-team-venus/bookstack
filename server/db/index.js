@@ -1,5 +1,4 @@
 //this is the access point for all things database related!
-
 const db = require('./db');
 
 const Author = require('./models/Author');
@@ -7,34 +6,34 @@ const Book = require('./models/Book');
 const CartItem = require('./models/CartItem');
 const Comment = require('./models/Comment');
 const Genre = require('./models/Genre');
-const Order = require('./models/Order');
-const ShoppingSession = require('./models/ShoppingSession');
+const Cart = require('./models/Cart');
 const User = require('./models/User');
 
-//associations could go here!
+// ASSOCIATIONS
+
+// Book has authorID as FK
 Author.hasMany(Book);
 Book.belongsTo(Author);
 
+// Comment has userID as FK
 User.hasMany(Comment);
 Comment.belongsTo(User);
 
-User.hasMany(Order);
-Order.belongsTo(User);
-
-Order.hasMany(CartItem);
-CartItem.belongsTo(Order);
-
-User.hasMany(ShoppingSession);
-ShoppingSession.belongsTo(User);
-
+// Comment has bookID as FK
 Book.hasMany(Comment);
 Comment.belongsTo(Book);
 
+// Cart has userID as FK
+User.hasMany(Cart);
+Cart.belongsTo(User);
+
+// book_genre has genreID and bookID as FK
 Book.belongsToMany(Genre, { through: 'book_genre' });
 Genre.belongsToMany(Book, { through: 'book_genre' });
 
-Book.belongsToMany(User, { through: 'book_user' });
-User.belongsToMany(Book, { through: 'book_user' });
+// CartItem has bookID and cartID as FK
+Book.belongsToMany(Cart, { through: CartItem, foreignKey: 'books_id' });
+Cart.belongsToMany(Book, { through: CartItem, foreignKey: 'carts_id' });
 
 module.exports = {
 	db,
@@ -44,8 +43,7 @@ module.exports = {
 		CartItem,
 		Comment,
 		Genre,
-		Order,
-		ShoppingSession,
+		Cart,
 		User
 	}
 };
