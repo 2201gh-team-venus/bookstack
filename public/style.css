@@ -1,9 +1,19 @@
+@import url('cart.css');
+
+:root {
+	--clr-accent-light: rgb(247, 247, 247);
+}
+
 body {
 	font-family: sans-serif;
 }
 
 a {
 	text-decoration: none;
+}
+
+button {
+	cursor: pointer;
 }
 
 label {
