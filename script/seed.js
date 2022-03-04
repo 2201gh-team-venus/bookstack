@@ -60,7 +60,7 @@ async function seed() {
 	])
 
 	// Creating Authors
-	const [author1, author2, author3, author4, author5, author6, author7] =
+	const [author1, author2, author3, author4, author5, author6, author7, author8, author9, author10, author11] =
 		await Promise.all([
 			Author.create({
 				name: "J.K. Rowling",
@@ -89,11 +89,27 @@ async function seed() {
 			Author.create({
 				name: "Shel Silverstein",
 				bio: "Sheldon Allan Silverstein was an American writer, poet, cartoonist, songwriter, and playwright. Born and raised in Chicago, Illinois, Silverstein briefly attended university before being drafted into the United States Army."
+			}),
+			Author.create({
+				name: "Michelle Zauner",
+				bio: "Michelle Zauner is best known as a singer and guitarist who creates dreamy, shoegaze-inspired indie pop under the name Japanese Breakfast. She has won acclaim from major music outlets around the world for releases like Psychopomp (2016) and Soft Sounds from Another Planet (2017). "
+			}),
+			Author.create({
+				name: "Brit Bennett",
+				bio: "Born and raised in Southern California, Brit Bennett graduated from Stanford University and later earned her MFA in fiction at the University of Michigan, where she won a Hopwood Award in Graduate Short Fiction as well as the 2014 Hurston/Wright Award for College Writers"
+			}),
+			Author.create({
+				name: "Blake Crouch",
+				bio: "Blake Crouch is a bestselling novelist and screenwriter. He is the author of the forthcoming novel, Dark Matter, for which he is writing the screenplay for Sony Pictures."
+			}),
+			Author.create({
+				name: "Taylor Jenkins Reid",
+				bio: "Taylor Jenkins Reid is the New York Times bestselling author of Malibu Rising, Daisy Jones & The Six, and The Seven Husbands of Evelyn Hugo, as well as four other novels. Her newest novel, Malibu Rising, is out now."
 			})
 		])
 
 	// Creating Books
-	const [book1, book2, book3, book4] = await Promise.all([
+	const [book1, book2, book3, book4, book5, book6, book7, book8, book9, book10] = await Promise.all([
 		Book.create({
 			name: 'The Giving Tree',
 			imageURL:
@@ -129,6 +145,60 @@ async function seed() {
 				"Winter is coming. Such is the stern motto of House Stark, the northernmost of the fiefdoms that owe allegiance to King Robert Baratheon in far-off King’s Landing.",
 			inventory: 5,
 			price: 15.49
+		}),
+		Book.create({
+			name: "Crying in H Mart: A Memoir",
+			imageURL: 
+				"https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1601937850l/54814676.jpg",
+			description:
+				"An unflinching, powerful memoir about growing up Korean American, losing her mother, and forging her own identity.",
+			inventory: 5,
+			price: 15.95
+		}),
+		Book.create({
+			name: "The Vanishing Half",
+			imageURL: 
+				"https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1577090827l/51791252._SX318_SY475_.jpg",
+			description:
+				"The Vignes twin sisters will always be identical. But after growing up together in a small, southern black community and running away at age sixteen, it's not just the shape of their daily lives that is different as adults, it's everything: their families, their communities, their racial identities.",
+			inventory: 5,
+			price: 13.86
+		}),
+		Book.create({
+			name: "Harry Poter And The Chamber Of Secrets",
+			imageURL:
+				"https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1474169725l/15881._SY475_.jpg",
+			description:
+				"Harry Potter's summer has included the worst birthday ever, doomy warnings from a house-elf called Dobby, and rescue from the Dursleys by his friend Ron Weasley in a magical flying car!",
+			inventory: 4,
+			price: 6.98
+		}),
+		Book.create({
+			name: "Harry Potter and the Prisoner of Azkaban",
+			imageURL:
+				"https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1630547330l/5._SY475_.jpg",
+			description:
+				"For twelve long years, the dread fortress of Azkaban held an infamous prisoner named Sirius Black. Convicted of killing thirteen people with a single curse, he was said to be the heir apparent to the Dark Lord, Voldemort.",
+			inventory: 4,
+			price: 8.78
+		}),
+		Book.create({
+			name: "Recursion",
+			imageURL:
+				"https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1543687940l/42046112.jpg",
+			description:
+				"That's what NYC cop Barry Sutton is learning, as he investigates the devastating phenomenon the media has dubbed False Memory Syndrome—a mysterious affliction that drives its victims mad with memories of a life they never lived.",
+			inventory: 5,
+			price: 11.99
+		}),
+		Book.create({
+			name: "The Seven Husbands of Evelyn Hugo",
+			imageURL:
+				"https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1498169036l/32620332._SY475_.jpg",
+			description:
+				"Aging and reclusive Hollywood movie icon Evelyn Hugo is finally ready to tell the truth about her glamorous and scandalous life. But when she chooses unknown magazine reporter Monique Grant for the job, no one is more astounded than Monique herself. Why her? Why now?",
+			inventory: 6,
+			price: 9.42
 		})
 	])
 
@@ -148,9 +218,16 @@ async function seed() {
 
 	// Adding Author-Book Association
 	await author1.addBook(book2)
+	await author1.addBook(book7)
+	await author1.addBook(book8)
 	await author4.addBook(book3)
 	await author5.addBook(book4)
 	await author7.addBook(book1)
+	await author8.addBook(book5)
+	await author9.addBook(book6)
+	await author10.addBook(book9)
+	await author11.addBook(book10)
+
 
 	await book2.addComment(comment1)
 	await book2.addComment(comment2)
@@ -159,7 +236,7 @@ async function seed() {
 	await user5.addComment(comment2)
 	await user6.addComment(comment4)
 
-	console.log(`seeded ${users.length} users`)
+	// console.log(`seeded ${users.length} users`)
 	console.log(`seeded successfully`)
 }
 
