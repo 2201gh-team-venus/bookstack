@@ -1,5 +1,5 @@
 //this is the access point for all things database related!
-
+const Sequelize = require('sequelize');
 const db = require('./db');
 
 const Author = require('./models/Author');
@@ -33,15 +33,31 @@ User.hasMany(Cart);
 Cart.belongsTo(User);
 
 // Cart has CartItem as FK
-CartItem.hasMany(Cart);
-Cart.belongsTo(CartItem);
+// CartItem.hasMany(Cart);
+// Cart.belongsTo(CartItem);
 
 // CartItem has bookID as FK
-Book.hasMany(CartItem);
-CartItem.belongsTo(Book);
+// Book.hasMany(CartItem);
+// CartItem.belongsTo(Book);
 
 Book.belongsToMany(Genre, { through: 'book_genre' });
 Genre.belongsToMany(Book, { through: 'book_genre' });
+
+const CartItemTest = db.define('cart_item_test', {
+	id: {
+		type: Sequelize.INTEGER,
+		primaryKey: true,
+		autoIncrement: true,
+		allowNull: false
+	},
+	quantity: {
+		type: Sequelize.INTEGER,
+		allowNull: false
+	}
+})
+
+Book.belongsToMany(Cart, { through: CartItemTest, foreignKey: 'books_id' });
+Cart.belongsToMany(Book, { through: CartItemTest, foreignKey: 'carts_id' });
 
 module.exports = {
 	db,
@@ -49,6 +65,7 @@ module.exports = {
 		Author,
 		Book,
 		CartItem,
+		CartItemTest,
 		Comment,
 		Genre,
 		Cart,
