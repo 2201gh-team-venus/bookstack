@@ -32,14 +32,15 @@ form div {
 
 .books {
 	display: flex;
-	justify-content: space-around;
+	/* justify-content: space-between; */
+	flex-wrap: wrap;
 }
 
 .single-book {
-	width: 375px;
-	height: 350px;
+	width: 400px;
+	height: 400px;
 	text-align: center;
-	padding: 5px;
+	margin: 10px;
 }
 
 .single-book img {
