@@ -31,7 +31,7 @@ export class AllBooks extends React.Component {
 }
 
 const mapStateToProps = ({ books }) => {
-	return { books }
+	return { books };
 };
 
 const mapDispatchToProps = dispatch => {

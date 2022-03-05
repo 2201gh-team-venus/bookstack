@@ -32,10 +32,9 @@ class Routes extends Component {
 						<Route path="/cart" component={Cart} />
 						<Route exact path="/books" component={AllBooks} />
 						<Route path="/books/:bookId" component={SingleBook} />
-						<Redirect to="/home" />
 					</Switch>
 				</div>
-			)
+			);
 		}
 
 		return (
@@ -46,7 +45,6 @@ class Routes extends Component {
 						<Route path="/cart" component={Cart} />
 						<Route exact path="/books" component={AllBooks} />
 						<Route path="/books/:bookId" component={SingleBook} />
-						<Redirect to="/home" />
 					</Switch>
 				) : (
 					<Switch>
