@@ -249,15 +249,6 @@ async function seed() {
 	await author10.addBook(book9);
 	await author11.addBook(book10);
 
-	// Adding Book-Comment Association
-	await book2.addComment(comment1);
-	await book2.addComment(comment2);
-	await book2.addComment(comment4);
-
-	// Adding User-Comment Association
-	await user5.addComment(comment2);
-	await user6.addComment(comment4);
-
 	// Adding User-Cart Association
 	await user1.addCart(cart1);
 	await user1.addCart(cart2);
@@ -273,7 +264,19 @@ async function seed() {
 		book2.setCarts(cart4),
 		book2.setCarts(cart5)
 	]);
+  
+  // Adding Comment-Book Association
+	await book2.addComment(comment1);
+	await book2.addComment(comment2);
+	await book2.addComment(comment4);
+	await book8.addComment(comment3);
 
+	await user5.addComment(comment2);
+	await user6.addComment(comment4);
+	await user1.addComment(comment1);
+	await user2.addComment(comment3);
+
+	// console.log(`seeded ${users.length} users`)
 	console.log(`seeded successfully`);
 }
 

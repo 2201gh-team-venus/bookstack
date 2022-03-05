@@ -1,0 +1,29 @@
+/*
+	==========
+	ADMIN PAGE
+	==========
+*/
+
+.admin-books {
+	display: flex;
+	flex-direction: column;
+}
+
+.book-row {
+	display: flex;
+	height: 175px;
+	margin: 15px;
+}
+
+.book-row img {
+	width: 100px;
+	height: 150px;
+	margin-left: 30px;
+	margin-right: 30px;
+	align-self: center;
+}
+
+.admin-buttons {
+	margin: 5px;
+	margin-left: 0px;
+}
