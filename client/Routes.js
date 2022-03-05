@@ -7,6 +7,8 @@ import { me } from './store';
 import AllBooks from './components/AllBooks';
 import SingleBook from './components/SingleBook';
 import Cart from './components/Cart';
+import AdminPortal from './components/AdminPortal';
+import AllUsers from './components/AllUsers';
 
 /**
  * COMPONENT
@@ -17,7 +19,24 @@ class Routes extends Component {
 	}
 
 	render() {
-		const { isLoggedIn } = this.props;
+		const { isLoggedIn, isAdmin } = this.props;
+
+		// check if the user is logged in and is an admin:
+		if (isLoggedIn && isAdmin) {
+			return (
+				<div>
+					<Switch>
+						<Route path="/home" component={Home} />
+						<Route path="/admin" component={AdminPortal} />
+						<Route path="/users" component={AllUsers} />
+						<Route path="/cart" component={Cart} />
+						<Route exact path="/books" component={AllBooks} />
+						<Route path="/books/:bookId" component={SingleBook} />
+						<Redirect to="/home" />
+					</Switch>
+				</div>
+			)
+		}
 
 		return (
 			<div>
@@ -53,7 +72,8 @@ const mapState = state => {
 	return {
 		// Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
 		// Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
-		isLoggedIn: !!state.auth.id
+		isLoggedIn: !!state.auth.id,
+		isAdmin: state.auth.role === 'admin'
 	};
 };
 
