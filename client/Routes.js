@@ -7,8 +7,9 @@ import { me } from './store';
 import AllBooks from './components/AllBooks';
 import SingleBook from './components/SingleBook';
 import Cart from './components/Cart';
-import AdminPortal from './components/AdminPortal';
-import AllUsers from './components/AllUsers';
+import AdminPortal from './components/admin/AdminPortal';
+import AllUsers from './components/admin/AllUsers';
+import AllProducts from './components/admin/AllProducts';
 
 /**
  * COMPONENT
@@ -29,9 +30,11 @@ class Routes extends Component {
 						<Route path="/home" component={Home} />
 						<Route path="/admin" component={AdminPortal} />
 						<Route path="/users" component={AllUsers} />
+						<Route path="/products" component={AllProducts} />
 						<Route path="/cart" component={Cart} />
 						<Route exact path="/books" component={AllBooks} />
 						<Route path="/books/:bookId" component={SingleBook} />
+						<Redirect to="/home" />
 					</Switch>
 				</div>
 			);
@@ -45,6 +48,7 @@ class Routes extends Component {
 						<Route path="/cart" component={Cart} />
 						<Route exact path="/books" component={AllBooks} />
 						<Route path="/books/:bookId" component={SingleBook} />
+						<Redirect to="/home" />
 					</Switch>
 				) : (
 					<Switch>

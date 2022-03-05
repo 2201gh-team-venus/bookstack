@@ -7,8 +7,9 @@ const AdminPortal = () => {
 			<Link to="/users">
 				<button type="button">View User Information</button>
 			</Link>
-
-			<button type="button">View and Edit Products</button>
+			<Link to="/products">
+				<button className="admin-buttons" type="button">View and Edit Products</button>
+			</Link>
 		</div>
 	);
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchUsers } from '../store/users';
+import { fetchUsers } from '../../store/users';
 
 class AllUsers extends React.Component {
 	componentDidMount() {
@@ -15,10 +15,12 @@ class AllUsers extends React.Component {
 		const users = this.props.users;
 		return (
 			<div>
-                <h3>All Users:</h3>
-				{users.map(user => (
-					<div key={user.id}>{user.username}</div>
-				))}
+				<h3>All Users:</h3>
+				<ul>
+					{users.map(user => (
+						<li key={user.id}>{user.username}</li>
+					))}
+				</ul>
 			</div>
 		);
 	}

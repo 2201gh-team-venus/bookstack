@@ -1,4 +1,5 @@
 @import url('cart.css');
+@import url('admin.css');
 
 :root {
 	--clr-accent-light: rgb(247, 247, 247);
