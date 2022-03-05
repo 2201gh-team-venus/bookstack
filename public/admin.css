@@ -31,3 +31,17 @@
 	margin: 5px;
 	margin-left: 0px;
 }
+
+.add-book-form {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.add-book-form label, input, button {
+	margin: 5px;
+}
+
+.book-description input {
+	width: 300px;
+}

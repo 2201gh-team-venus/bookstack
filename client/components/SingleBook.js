@@ -12,7 +12,7 @@ class SingleBook extends React.Component {
 		if (!this.props.book) {
 			return <h1>No book found</h1>;
 		}
-		console.log("this.props in SingleBook componet--->", this.props)
+
 		const { name, description, imageURL, price } = this.props.book;
 		const author = this.props.book.author || {};
 		const comments = this.props.book.comments || []; //check with Pamela for keys!!!

@@ -29,7 +29,7 @@ export const fetchBooks = () => {
 
 export const addNewBook = (book, history) => {
 	return async dispatch => {
-		const { data: newBook } = await axiox.post('/api/books', book);
+		const { data: newBook } = await axios.post('/api/books', book);
 		dispatch(addBook(newBook));
 		history.push('/products');
 	};

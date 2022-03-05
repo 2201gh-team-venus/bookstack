@@ -34,7 +34,7 @@ class Routes extends Component {
 						<Route path="/products" component={AllProducts} />
 						<Route path="/cart" component={Cart} />
 						<Route exact path="/books" component={AllBooks} />
-						<Route path="/books/add" component={AddBook} />
+						<Route exact path="/books/add" component={AddBook} />
 						<Route path="/books/:bookId" component={SingleBook} />
 						<Redirect to="/home" />
 					</Switch>
