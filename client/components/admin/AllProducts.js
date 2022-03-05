@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { fetchBooks } from '../../store/books';
 
 class AllProducts extends React.Component {
@@ -19,6 +20,12 @@ class AllProducts extends React.Component {
 
 		return (
 			<div className="admin-books">
+				<Link to="/books/add">
+					<button className="add-book" type="button">
+						Add New Book
+					</button>
+				</Link>
+
 				{books.map(book => (
 					<div className="book-row" key={book.id}>
 						<img src={book.imageURL} />
@@ -33,8 +40,12 @@ class AllProducts extends React.Component {
 								{book.inventory}
 							</p>
 							<div>
-								<button className="admin-buttons" type="button">Edit</button>
-								<button className="admin-buttons" type="button">Remove</button>
+								<button className="admin-buttons" type="button">
+									Edit
+								</button>
+								<button className="admin-buttons" type="button">
+									Remove
+								</button>
 							</div>
 						</div>
 					</div>

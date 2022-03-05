@@ -9,6 +9,10 @@
 	flex-direction: column;
 }
 
+.add-book {
+	align-self: center;
+}
+
 .book-row {
 	display: flex;
 	height: 175px;
