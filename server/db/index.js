@@ -32,8 +32,8 @@ Book.belongsToMany(Genre, { through: 'book_genre' });
 Genre.belongsToMany(Book, { through: 'book_genre' });
 
 // CartItem has bookID and cartID as FK
-Book.belongsToMany(Cart, { through: CartItem, foreignKey: 'books_id' });
-Cart.belongsToMany(Book, { through: CartItem, foreignKey: 'carts_id' });
+Book.belongsToMany(Cart, { through: CartItem, foreignKey: 'book_id' });
+Cart.belongsToMany(Book, { through: CartItem, foreignKey: 'cart_id' });
 
 module.exports = {
 	db,
