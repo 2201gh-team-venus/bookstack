@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchSingleBook } from '../store/singleBook';
 import CommentList from './CommentsList';
+import CommentForm from './CommentForm'
 
 class SingleBook extends React.Component {
 	componentDidMount() {
@@ -9,13 +10,13 @@ class SingleBook extends React.Component {
 	}
 
 	render() {
+		console.log("this.state in singlebooks --->", this.props)
 		if (!this.props.book) {
 			return <h1>No book found</h1>;
 		}
-		console.log("this.props in SingleBook componet--->", this.props)
 		const { name, description, imageURL, price } = this.props.book;
 		const author = this.props.book.author || {};
-		const comments = this.props.book.comments || []; //check with Pamela for keys!!!
+		const comments = this.props.book.comments || [];
 
 		return (
 			<div className="book">
@@ -29,7 +30,8 @@ class SingleBook extends React.Component {
 
 					<div className="reviews">
 						<h4>Reviews:</h4>
-						<CommentList comments={comments} /> {/*check if this works!*/}
+						<CommentForm/>
+						<CommentList comments={comments} />
 					</div>
 				</div>
 			</div>
@@ -37,8 +39,12 @@ class SingleBook extends React.Component {
 	}
 }
 
-const mapStateToProps = ({ book }) => {
-	return { book };
+const mapStateToProps = (state) => {
+	return {
+		book: state.book,
+		isLoggedIn: !!state.auth.id,
+		users: state.users //need cart to be have backend to have info in []
+	}
 };
 
 const mapDispatchToProps = dispatch => {

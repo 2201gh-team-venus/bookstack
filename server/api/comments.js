@@ -19,22 +19,29 @@ router.get('/', async (req, res, next) => {
 
 /* Add comment. */
 router.post('/', async (req, res, next) => {
+	console.log("req.body", req.body)
 	try {
-		const comment = await Comment.create({ message: req.body.comment });
-		const user = await User.findByPk(req.body.user);
-		const book = await Book.findByPk(req.body.book);
+		const comment = await Comment.create(req.body);  //simplified version b.c wrote thunk differently
+		
+		return res.sendStatus(201);
+		// try {
+		// 	const comment = await Comment.create({ message: req.body.comment });
+		// 	const user = await User.findByPk(req.body.user);
+		// 	const book = await Book.findByPk(req.body.book);
+		
+		// 	if (!user || !book) {
+		// 		res.sendStatus(406); /* User or book not in database. */
+		// 	} else {
+		// 		await user.addComment(comment);
+		// 		await book.addComment(comment);
+		// 		return res.sendStatus(201);
+		// 	}
 
-		if (!user || !book) {
-			res.sendStatus(406); /* User or book not in database. */
-		} else {
-			await user.addComment(comment);
-			await book.addComment(comment);
-			return res.sendStatus(201);
-		}
 	} catch (err) {
 		next(err);
 	}
 });
+
 
 
 /* Find comment by id. */
