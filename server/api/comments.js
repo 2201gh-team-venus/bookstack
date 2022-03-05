@@ -36,6 +36,7 @@ router.post('/', async (req, res, next) => {
 	}
 });
 
+
 /* Find comment by id. */
 router.get('/:comment', async (req, res, next) => {
 	try {
