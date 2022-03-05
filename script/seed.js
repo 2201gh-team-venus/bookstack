@@ -2,7 +2,7 @@
 
 const {
 	db,
-	models: { User, Author, Book, Genre, Comment }
+	models: { User, Author, Book, Genre, Comment, Cart, CartItem }
 } = require('../server/db');
 
 /**
@@ -228,6 +228,15 @@ async function seed() {
 		Comment.create({ message: 'I cannot wait till they make this book an anime!' })
 	]);
 
+	// Creating Carts
+	const [cart1, cart2, cart3, cart4, cart5] = await Promise.all([
+		Cart.create({ purchased: false }),
+		Cart.create({ purchased: true }),
+		Cart.create({ purchased: false }),
+		Cart.create({ purchased: true }),
+		Cart.create({ purchased: true })
+	]);
+
 	// Adding Author-Book Association
 	await author1.addBook(book2);
 	await author1.addBook(book7);
@@ -240,6 +249,23 @@ async function seed() {
 	await author10.addBook(book9);
 	await author11.addBook(book10);
 
+	// Adding User-Cart Association
+	await user1.addCart(cart1);
+	await user1.addCart(cart2);
+	await user2.addCart(cart3);
+	await user3.addCart(cart4);
+	await user4.addCart(cart5);
+
+	// Adding Book-Cart Association
+	await Promise.all([
+		book1.setCarts(cart1),
+		book2.setCarts(cart2),
+		book2.setCarts(cart3),
+		book2.setCarts(cart4),
+		book2.setCarts(cart5)
+	]);
+  
+  // Adding Comment-Book Association
 	await book2.addComment(comment1);
 	await book2.addComment(comment2);
 	await book2.addComment(comment4);
