@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {
-	models: { User }
+	models: { User, Cart }
 } = require('../db');
 
 /* Find all users. */
@@ -75,7 +75,8 @@ router.get('/:userId', async (req, res, next) => {
 	}
 });
 
-/* Update user. */
+// PUT /api/users/:userId
+// Update user
 router.put('/:userId', async (req, res, next) => {
 	try {
 		const userData = {
@@ -100,7 +101,8 @@ router.put('/:userId', async (req, res, next) => {
 	}
 });
 
-/* Remove user. */
+// DELETE /api/users/userId
+// Remove user
 router.delete('/:userId', async (req, res, next) => {
 	try {
 		const user = await User.findByPk(req.params.userId);
@@ -111,6 +113,47 @@ router.delete('/:userId', async (req, res, next) => {
 		} else {
 			res.sendStatus(404);
 		}
+	} catch (err) {
+		next(err);
+	}
+});
+
+// GET /api/users/:userId/carts
+// Find all carts that belong to a user
+router.get('/:userId/carts', async (req, res, next) => {
+	try {
+		const cartItems = await Cart.findAll({
+			include: [
+				{ model: Book },
+				{
+					model: User,
+					where: {
+						id: req.params.userId
+					}
+				}
+			]
+		});
+		res.json(cartItems);
+	} catch (err) {
+		next(err);
+	}
+});
+
+// Get /api/users/:userId/carts/:cartId
+// Find a cart that belong to a user by cartId
+router.get('/:userId/carts/:cartId', async (req, res, next) => {
+	try {
+		const cartItem = await Cart.findByPk(req.params.cartId, {
+			include: [
+				{
+					model: User,
+					where: {
+						id: req.params.userId
+					}
+				}
+			]
+		});
+		res.json(cartItem);
 	} catch (err) {
 		next(err);
 	}
