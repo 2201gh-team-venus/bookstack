@@ -11,7 +11,9 @@ class AddBook extends React.Component {
 			imageURL: '',
 			description: '',
 			price: 0,
-			inventory: 0
+			inventory: 0,
+            authorName: '',
+            authorBio: ''
 		};
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,12 +27,11 @@ class AddBook extends React.Component {
 
 	handleSubmit(evt) {
 		evt.preventDefault();
-        console.log(this.state);
-        // this.props.addBook({ ...this.state });
+        this.props.addBook({ ...this.state });
 	}
 
 	render() {
-		const { name, imageURL, description, price, inventory } = this.state;
+		const { name, imageURL, description, price, inventory, authorName, authorBio } = this.state;
         const { handleChange, handleSubmit } = this;
 
 		return (
@@ -49,6 +50,12 @@ class AddBook extends React.Component {
 
 				<label htmlFor="inventory">Inventory: </label>
 				<input name="inventory" value={inventory} onChange={handleChange} />
+
+                <label htmlFor="authorName">Author: </label>
+				<input name="authorName" value={authorName} onChange={handleChange} />
+
+                <label htmlFor="authorBio">Author's Bio: </label>
+				<input name="authorBio" value={authorBio} onChange={handleChange} />
 
 				<div>
 					<button type="submit">Add Book</button>

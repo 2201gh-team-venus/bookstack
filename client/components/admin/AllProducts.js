@@ -13,6 +13,11 @@ class AllProducts extends React.Component {
 		if (!books || books.length === 0) {
 			return (
 				<div>
+					<Link to="/books/add">
+						<button className="add-book" type="button">
+							Add New Book
+						</button>
+					</Link>
 					<h3>No Books</h3>
 				</div>
 			);
@@ -27,13 +32,15 @@ class AllProducts extends React.Component {
 				</Link>
 
 				{books.map(book => (
-					<div className="book-row" key={book.id}>
+					<div className="book-row" key={`book-${book.id}`}>
 						<img src={book.imageURL} />
 						<div className="book-info-row">
-							<h3>{book.name}</h3>
+							<Link to={`/books/${book.id}`}>
+								<h3>{book.name}</h3>
+							</Link>
 							<p>
 								<b>Price: $</b>
-								{book.price}
+								{book.price ? Number(book.price).toFixed(2) : ''}
 							</p>
 							<p>
 								<b>Inventory: </b>

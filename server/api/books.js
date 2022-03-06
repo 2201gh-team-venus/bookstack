@@ -37,7 +37,7 @@ router.post('/', async (req, res, next) => {
 		};
 
 		const book = await Book.create({ ...bookData });
-		await book.addAuthor(author);
+		await author.addBook(book);
 		res.sendStatus(201);
 	} catch (err) {
 		next(err);
