@@ -26,7 +26,7 @@ class SingleBook extends React.Component {
 					<h4>By: {author.name}</h4>
 					<p>{description}</p>
 					<h2>${price ? Number(price).toFixed(2) : 0}</h2>
-					<button>Add To Cart</button>
+					<button>Add to Cart</button>
 
 					<div className="reviews">
 						<h4>Reviews:</h4>
