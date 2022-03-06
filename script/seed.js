@@ -262,10 +262,12 @@ async function seed() {
 		book2.setCarts(cart2),
 		book2.setCarts(cart3),
 		book2.setCarts(cart4),
-		book2.setCarts(cart5)
+		book2.setCarts(cart5),
+		book3.setCarts(cart1),
+		book4.setCarts(cart1)
 	]);
-  
-  // Adding Comment-Book Association
+
+	// Adding Comment-Book Association
 	await book2.addComment(comment1);
 	await book2.addComment(comment2);
 	await book2.addComment(comment4);
