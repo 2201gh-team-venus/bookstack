@@ -37,7 +37,7 @@ router.post('/', async (req, res, next) => {
 		};
 
 		const book = await Book.create({ ...bookData });
-		await book.addAuthor(author);
+		await author.addBook(book);
 		res.sendStatus(201);
 	} catch (err) {
 		next(err);
@@ -88,7 +88,7 @@ router.delete('/:bookId', async (req, res, next) => {
 
 		if (book) {
 			Book.destroy({ where: { id: book.id } });
-			return res.sendStatus(200);
+			return res.status(200).send(book);
 		} else {
 			res.sendStatus(404); /* Book not in database. */
 		}

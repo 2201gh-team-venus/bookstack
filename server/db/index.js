@@ -35,6 +35,14 @@ Genre.belongsToMany(Book, { through: 'book_genre' });
 Book.belongsToMany(Cart, { through: CartItem, foreignKey: 'books_id' });
 Cart.belongsToMany(Book, { through: CartItem, foreignKey: 'carts_id' });
 
+// SEQUELIZE HOOK
+Book.beforeValidate(book => {
+	if (!book.imageURL || book.imageURL === '') {
+		book.imageURL =
+			'https://thewritelife.com/wp-content/uploads/2019/08/How-to-format-a-book.jpg.webp';
+	}
+});
+
 module.exports = {
 	db,
 	models: {
