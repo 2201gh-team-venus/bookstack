@@ -24,6 +24,10 @@
 	background-color: var(--clr-accent-light);
 }
 
+.items__img {
+	width: 14rem;
+}
+
 .items__right-container > * {
 	margin-bottom: 1em;
 }
