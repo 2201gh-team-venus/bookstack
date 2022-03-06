@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {
-	models: { User, Cart }
+	models: { User, Cart, Book }
 } = require('../db');
 
 /* Find all users. */
@@ -139,19 +139,23 @@ router.get('/:userId/carts', async (req, res, next) => {
 	}
 });
 
-// Get /api/users/:userId/carts/:cartId
+// Get /api/users/:userId/carts/pending
 // Find a cart that belong to a user by cartId
-router.get('/:userId/carts/:cartId', async (req, res, next) => {
+router.get('/:userId/carts/pending', async (req, res, next) => {
 	try {
-		const cartItem = await Cart.findByPk(req.params.cartId, {
+		const cartItem = await Cart.findOne({
 			include: [
 				{
 					model: User,
 					where: {
 						id: req.params.userId
 					}
-				}
-			]
+				},
+				{ model: Book }
+			],
+			where: {
+				purchased: false
+			}
 		});
 		res.json(cartItem);
 	} catch (err) {
