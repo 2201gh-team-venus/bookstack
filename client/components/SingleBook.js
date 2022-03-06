@@ -10,10 +10,10 @@ class SingleBook extends React.Component {
 	}
 
 	render() {
-		console.log("this.state in singlebooks --->", this.props)
 		if (!this.props.book) {
 			return <h1>No book found</h1>;
 		}
+    
 		const { name, description, imageURL, price } = this.props.book;
 		const author = this.props.book.author || {};
 		const comments = this.props.book.comments || [];
@@ -25,7 +25,7 @@ class SingleBook extends React.Component {
 					<h2>{name}</h2>
 					<h4>By: {author.name}</h4>
 					<p>{description}</p>
-					<h2>${price}</h2>
+					<h2>${price ? Number(price).toFixed(2) : 0}</h2>
 					<button>Add To Cart</button>
 
 					<div className="reviews">
