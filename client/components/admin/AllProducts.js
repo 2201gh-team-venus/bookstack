@@ -1,15 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchBooks } from '../../store/books';
+import { fetchBooks, deleteBook } from '../../store/books';
 
 class AllProducts extends React.Component {
+	constructor(props) {
+		super(props);
+		this.removeBook = this.removeBook.bind(this);
+	}
+
 	componentDidMount() {
 		this.props.loadBooks();
 	}
 
+	removeBook(bookId) {
+		this.props.deleteBook(bookId);
+	}
+
 	render() {
 		const { books } = this.props;
+		const { removeBook } = this;
+
 		if (!books || books.length === 0) {
 			return (
 				<div>
@@ -50,7 +61,10 @@ class AllProducts extends React.Component {
 								<button className="admin-buttons" type="button">
 									Edit
 								</button>
-								<button className="admin-buttons" type="button">
+								<button
+									className="admin-buttons"
+									type="button"
+									onClick={() => removeBook(book.id)}>
 									Remove
 								</button>
 							</div>
@@ -66,9 +80,10 @@ const mapStateToProps = ({ books }) => {
 	return { books };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch, { history }) => {
 	return {
-		loadBooks: () => dispatch(fetchBooks())
+		loadBooks: () => dispatch(fetchBooks()),
+		deleteBook: bookId => dispatch(deleteBook(bookId, history))
 	};
 };
 
