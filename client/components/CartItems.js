@@ -9,9 +9,17 @@ function CartItems(props) {
 			<div className="items__right-container">
 				<h4 className="items__name">{props.data.name}</h4>
 				<div className="items__quantity-wrapper">
-					<button type="button">increase</button>
-					<div className="items__quantity">1</div>
-					<button type="button">decrease</button>
+					<button
+						onClick={() => props.quantityFn(props.data.id, 'increase')}
+						type="button">
+						increase
+					</button>
+					<div className="items__quantity">{props.data.quantity}</div>
+					<button
+						onClick={() => props.quantityFn(props.data.id, 'decrease')}
+						type="button">
+						decrease
+					</button>
 				</div>
 				<div className="items__price">${props.data.price}</div>
 			</div>
