@@ -15,6 +15,7 @@ class SingleBook extends React.Component {
 
 	addToCart() {
 		/* If user is not logged in. */
+		// JOE CR: What if they are logged in?
 		if (!this.props.isLoggedIn) {
 			/* If localstorage variable exist. */
 			if (localStorage.getItem('temp')) {
@@ -59,6 +60,7 @@ class SingleBook extends React.Component {
 					<h2>{name}</h2>
 					<h4>By: {author.name}</h4>
 					<p>{description}</p>
+					{/* JOE CR: Formatting money is something we probably have to do a lot. What are our options for centralizing? */}
 					<h2>${price ? Number(price).toFixed(2) : 0}</h2>
 					<button onClick={this.addToCart}>Add to Cart</button>
 

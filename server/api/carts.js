@@ -6,6 +6,7 @@ const {
 // GET /api/carts/:cartId
 router.get('/:cartId', async (req, res, next) => {
 	try {
+		// JOE CR: It's strange that this variable is called cartItems when it uses the Cart (and not CartItem) model.
 		const cartItems = await Cart.findAll({
 			include: [Book, User],
 			where: { id: req.params.cartId }
@@ -20,6 +21,7 @@ router.get('/:cartId', async (req, res, next) => {
 // Add a book to a cart
 router.post('/:cartId/books/:bookId', async (req, res, next) => {
 	try {
+		// JOE CR: Camel case variable names! Conventions!
 		const cart_item = await CartItem.create({
 			quantity: 1,
 			cart_id: req.params.cartId,

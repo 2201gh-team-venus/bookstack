@@ -19,6 +19,7 @@ router.post('/', async (req, res, next) => {
 		const authorName = req.body.authorName;
 		const authorBio = req.body.authorBio;
 
+		// JOE CR: Nice!
 		/* If the author is not in the database, create author. */
 		const [author] = await Author.findOrCreate({
 			where: { name: authorName },

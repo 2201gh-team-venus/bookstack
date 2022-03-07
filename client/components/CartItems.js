@@ -1,5 +1,6 @@
 import React from 'react';
 
+// JOE CR: I love the separation of responsibility from the Cart component.
 function CartItems(props) {
 	return (
 		<div className="items__row">
