@@ -22,6 +22,12 @@ function CartItems(props) {
 					</button>
 				</div>
 				<div className="items__price">${props.data.price}</div>
+				<button
+					onClick={() => props.removeBookFn(props.data.id)}
+					type="button"
+					className="items__remove">
+					remove
+				</button>
 			</div>
 		</div>
 	);

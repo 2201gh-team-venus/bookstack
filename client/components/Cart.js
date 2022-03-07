@@ -12,6 +12,7 @@ class Cart extends React.Component {
 		this.handleBooks = this.handleBooks.bind(this);
 		this.handleTotal = this.handleTotal.bind(this);
 		this.handleQuantity = this.handleQuantity.bind(this);
+		this.handleDelete = this.handleDelete.bind(this);
 	}
 
 	componentDidMount() {
@@ -45,15 +46,23 @@ class Cart extends React.Component {
 	handleBooks() {
 		// prettier-ignore
 		if (this.props.cart.length > 0) {
-			return this.props.cart.map(obj => <CartItems key={obj.id} data={obj} />);
+			return this.props.cart.map(obj => (
+				<CartItems
+					key={obj.id}
+					data={obj}
+					quantityFn={this.handleQuantity}
+					removeBook={this.handleDelete}
+				/>
+			));
 		}
-
+		
 		else if (this.state.books && this.state.books.length > 0) {
 			return this.state.books.map(obj => (
 				<CartItems
-					quantityFn={this.handleQuantity}
 					key={obj.id}
 					data={obj}
+					quantityFn={this.handleQuantity}
+					removeBookFn={this.handleDelete}
 				/>
 			));
 		}
@@ -69,7 +78,11 @@ class Cart extends React.Component {
 		if (this.props.cart.length > 0) {
 			const { price } = priceReducer(this.props.cart);
 			return price;
-		} else if (localStorage.getItem('temp') && this.state.books !== null) {
+		} else if (
+			localStorage.getItem('temp') &&
+			this.state.books !== null &&
+			this.state.books.length > 0
+		) {
 			const { price } = priceReducer(this.state.books);
 			return price;
 		} else {
@@ -99,8 +112,19 @@ class Cart extends React.Component {
 		});
 	}
 
-	handleDecrease(id) {
-		console.log('something else');
+	handleDelete(id) {
+		if (this.props.cart.length > 0) {
+			// ! TOFIX: Do something if the user is logged in
+		} else if (localStorage.getItem('temp') && this.state.books !== null) {
+			const prvBooks = [...this.state.books];
+
+			const delBook = prvBooks.filter(obj => {
+				if (obj.id !== id) return true;
+				return false;
+			});
+
+			this.setState({ books: delBook });
+		}
 	}
 
 	render() {
