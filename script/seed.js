@@ -71,7 +71,11 @@ async function seed() {
 		author8,
 		author9,
 		author10,
-		author11
+		author11,
+		author12,
+		author13,
+		author14,
+		author15
 	] = await Promise.all([
 		Author.create({
 			name: 'J.K. Rowling',
@@ -116,103 +120,184 @@ async function seed() {
 		Author.create({
 			name: 'Taylor Jenkins Reid',
 			bio: 'Taylor Jenkins Reid is the New York Times bestselling author of Malibu Rising, Daisy Jones & The Six, and The Seven Husbands of Evelyn Hugo, as well as four other novels. Her newest novel, Malibu Rising, is out now.'
+		}),
+		Author.create({
+			name: 'Robert Kirkman',
+			bio: 'Robert Kirkman is an American comic book writer best known for his work on The Walking Dead, Invincible for Image Comics, as well as Ultimate X-Men and Marvel Zombies for Marvel Comics.'
+		}),
+		Author.create({
+			name: 'Kohei Horikoshi',
+			bio: `Born 1986 in the prefecture Aichi, Horikoshi first attracted attention in the second half of 2006 when he entered Shueisha's 72th Tezuka Award for Newcomers with his one shot "Nukegara" and made it to the final six, where he gained himself an "Honorable Mention".`
+		}),
+		Author.create({
+			name: 'Jacqueline Rayner',
+			bio: `Jacqueline Rayner is a best selling British author, best known for her work with the licensed fiction based on the long-running British science fiction television series Doctor Who.`
+		}),
+		Author.create({
+			name: 'AidaIro',
+			bio: `AidaIro is a Japanese mangaka. (less)`
 		})
 	]);
 
 	// Creating Books
-	const [book1, book2, book3, book4, book5, book6, book7, book8, book9, book10] =
-		await Promise.all([
-			Book.create({
-				name: 'The Giving Tree',
-				imageURL:
-					'https://upload.wikimedia.org/wikipedia/en/7/79/The_Giving_Tree.jpg',
-				description:
-					'Every day the boy would come to the tree to eat her apples, swing from her branches, or slide down her trunk...and the tree was happy. But as the boy grew older he began to want more from the tree, and the tree gave and gave and gave. This is a tender story, touched with sadness, aglow with consolation.',
-				inventory: 8,
-				price: 16.19
-			}),
-			Book.create({
-				name: 'Harry Potter and the Order of the Phoenix',
-				imageURL:
-					'https://images-na.ssl-images-amazon.com/images/I/51lFAzVQUxL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg',
-				description:
-					"As his fifth year at Hogwarts School of Witchcraft and Wizardry approaches, 15-year-old Harry Potter is in full-blown adolescence, complete with regular outbursts of rage, a nearly debilitating crush, and the blooming of a powerful sense of rebellion. It's been yet another infuriating and boring summer with the despicable Dursleys, this time with minimal contact from our hero's non-Muggle friends from school. Harry is feeling especially edgy at the lack of news from the magic world, wondering when the freshly revived evil Lord Voldemort will strike.",
-				inventory: 4,
-				price: 13.69
-			}),
-			Book.create({
-				name: 'Lord of the Rings: The Fellowship of the Ring',
-				imageURL:
-					'https://images-na.ssl-images-amazon.com/images/I/41gHG-a2OEL._SX331_BO1,204,203,200_.jpg',
-				description:
-					"The first volume in J.R.R. Tolkien's epic adventure THE LORD OF THE RINGS One Ring to rule them all, One Ring to find them, One Ring to bring them all and in the darkness bind them.",
-				inventory: 6,
-				price: 10.09
-			}),
-			Book.create({
-				name: 'A Game of Thrones: A Song of Ice and Fire',
-				imageURL:
-					'https://images-na.ssl-images-amazon.com/images/I/51DGe0uFHCL._SX330_BO1,204,203,200_.jpg',
-				description:
-					'Winter is coming. Such is the stern motto of House Stark, the northernmost of the fiefdoms that owe allegiance to King Robert Baratheon in far-off King’s Landing.',
-				inventory: 5,
-				price: 15.49
-			}),
-			Book.create({
-				name: 'Crying in H Mart: A Memoir',
-				imageURL:
-					'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1601937850l/54814676.jpg',
-				description:
-					'An unflinching, powerful memoir about growing up Korean American, losing her mother, and forging her own identity.',
-				inventory: 5,
-				price: 15.95
-			}),
-			Book.create({
-				name: 'The Vanishing Half',
-				imageURL:
-					'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1577090827l/51791252._SX318_SY475_.jpg',
-				description:
-					"The Vignes twin sisters will always be identical. But after growing up together in a small, southern black community and running away at age sixteen, it's not just the shape of their daily lives that is different as adults, it's everything: their families, their communities, their racial identities.",
-				inventory: 5,
-				price: 13.86
-			}),
-			Book.create({
-				name: 'Harry Potter And The Chamber Of Secrets',
-				imageURL:
-					'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1474169725l/15881._SY475_.jpg',
-				description:
-					"Harry Potter's summer has included the worst birthday ever, doomy warnings from a house-elf called Dobby, and rescue from the Dursleys by his friend Ron Weasley in a magical flying car!",
-				inventory: 4,
-				price: 6.98
-			}),
-			Book.create({
-				name: 'Harry Potter and the Prisoner of Azkaban',
-				imageURL:
-					'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1630547330l/5._SY475_.jpg',
-				description:
-					'For twelve long years, the dread fortress of Azkaban held an infamous prisoner named Sirius Black. Convicted of killing thirteen people with a single curse, he was said to be the heir apparent to the Dark Lord, Voldemort.',
-				inventory: 4,
-				price: 8.78
-			}),
-			Book.create({
-				name: 'Recursion',
-				imageURL:
-					'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1543687940l/42046112.jpg',
-				description:
-					"That's what NYC cop Barry Sutton is learning, as he investigates the devastating phenomenon the media has dubbed False Memory Syndrome—a mysterious affliction that drives its victims mad with memories of a life they never lived.",
-				inventory: 5,
-				price: 11.99
-			}),
-			Book.create({
-				name: 'The Seven Husbands of Evelyn Hugo',
-				imageURL:
-					'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1498169036l/32620332._SY475_.jpg',
-				description:
-					'Aging and reclusive Hollywood movie icon Evelyn Hugo is finally ready to tell the truth about her glamorous and scandalous life. But when she chooses unknown magazine reporter Monique Grant for the job, no one is more astounded than Monique herself. Why her? Why now?',
-				inventory: 6,
-				price: 9.42
-			})
-		]);
+	const [
+		book1,
+		book2,
+		book3,
+		book4,
+		book5,
+		book6,
+		book7,
+		book8,
+		book9,
+		book10,
+		book11,
+		book12,
+		book13,
+		book14,
+		book15,
+		book16
+	] = await Promise.all([
+		Book.create({
+			name: 'The Giving Tree',
+			imageURL:
+				'https://upload.wikimedia.org/wikipedia/en/7/79/The_Giving_Tree.jpg',
+			description:
+				'Every day the boy would come to the tree to eat her apples, swing from her branches, or slide down her trunk...and the tree was happy. But as the boy grew older he began to want more from the tree, and the tree gave and gave and gave. This is a tender story, touched with sadness, aglow with consolation.',
+			inventory: 8,
+			price: 16.19
+		}),
+		Book.create({
+			name: 'Harry Potter and the Order of the Phoenix',
+			imageURL:
+				'https://images-na.ssl-images-amazon.com/images/I/51lFAzVQUxL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg',
+			description:
+				"As his fifth year at Hogwarts School of Witchcraft and Wizardry approaches, 15-year-old Harry Potter is in full-blown adolescence, complete with regular outbursts of rage, a nearly debilitating crush, and the blooming of a powerful sense of rebellion. It's been yet another infuriating and boring summer with the despicable Dursleys, this time with minimal contact from our hero's non-Muggle friends from school. Harry is feeling especially edgy at the lack of news from the magic world, wondering when the freshly revived evil Lord Voldemort will strike.",
+			inventory: 4,
+			price: 13.69
+		}),
+		Book.create({
+			name: 'Lord of the Rings: The Fellowship of the Ring',
+			imageURL:
+				'https://images-na.ssl-images-amazon.com/images/I/41gHG-a2OEL._SX331_BO1,204,203,200_.jpg',
+			description:
+				"The first volume in J.R.R. Tolkien's epic adventure THE LORD OF THE RINGS One Ring to rule them all, One Ring to find them, One Ring to bring them all and in the darkness bind them.",
+			inventory: 6,
+			price: 10.09
+		}),
+		Book.create({
+			name: 'A Game of Thrones: A Song of Ice and Fire',
+			imageURL:
+				'https://images-na.ssl-images-amazon.com/images/I/51DGe0uFHCL._SX330_BO1,204,203,200_.jpg',
+			description:
+				'Winter is coming. Such is the stern motto of House Stark, the northernmost of the fiefdoms that owe allegiance to King Robert Baratheon in far-off King’s Landing.',
+			inventory: 5,
+			price: 15.49
+		}),
+		Book.create({
+			name: 'Crying in H Mart: A Memoir',
+			imageURL:
+				'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1601937850l/54814676.jpg',
+			description:
+				'An unflinching, powerful memoir about growing up Korean American, losing her mother, and forging her own identity.',
+			inventory: 5,
+			price: 15.95
+		}),
+		Book.create({
+			name: 'The Vanishing Half',
+			imageURL:
+				'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1577090827l/51791252._SX318_SY475_.jpg',
+			description:
+				"The Vignes twin sisters will always be identical. But after growing up together in a small, southern black community and running away at age sixteen, it's not just the shape of their daily lives that is different as adults, it's everything: their families, their communities, their racial identities.",
+			inventory: 5,
+			price: 13.86
+		}),
+		Book.create({
+			name: 'Harry Potter And The Chamber Of Secrets',
+			imageURL:
+				'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1474169725l/15881._SY475_.jpg',
+			description:
+				"Harry Potter's summer has included the worst birthday ever, doomy warnings from a house-elf called Dobby, and rescue from the Dursleys by his friend Ron Weasley in a magical flying car!",
+			inventory: 4,
+			price: 6.98
+		}),
+		Book.create({
+			name: 'Harry Potter and the Prisoner of Azkaban',
+			imageURL:
+				'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1630547330l/5._SY475_.jpg',
+			description:
+				'For twelve long years, the dread fortress of Azkaban held an infamous prisoner named Sirius Black. Convicted of killing thirteen people with a single curse, he was said to be the heir apparent to the Dark Lord, Voldemort.',
+			inventory: 4,
+			price: 8.78
+		}),
+		Book.create({
+			name: 'Recursion',
+			imageURL:
+				'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1543687940l/42046112.jpg',
+			description:
+				"That's what NYC cop Barry Sutton is learning, as he investigates the devastating phenomenon the media has dubbed False Memory Syndrome—a mysterious affliction that drives its victims mad with memories of a life they never lived.",
+			inventory: 5,
+			price: 11.99
+		}),
+		Book.create({
+			name: 'The Seven Husbands of Evelyn Hugo',
+			imageURL:
+				'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1498169036l/32620332._SY475_.jpg',
+			description:
+				'Aging and reclusive Hollywood movie icon Evelyn Hugo is finally ready to tell the truth about her glamorous and scandalous life. But when she chooses unknown magazine reporter Monique Grant for the job, no one is more astounded than Monique herself. Why her? Why now?',
+			inventory: 6,
+			price: 9.42
+		}),
+		Book.create({
+			name: 'The Walking Dead, Vol. 2: Miles Behind Us',
+			imageURL:
+				'https://ia600604.us.archive.org/view_archive.php?archive=/22/items/olcovers293/olcovers293-L.zip&file=2936552-L.jpg',
+			description:
+				'The Walking Dead is a monthly black-and-white comic book series chronicling the travels of Rick Grimes, his family, and other survivors of a zombie apocalypse',
+			inventory: 6,
+			price: 10.33
+		}),
+		Book.create({
+			name: 'My Hero Academia, Vol. 14',
+			imageURL:
+				'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1530434141l/36538797.jpg',
+			description: `What would the world be like if 80 percent of the population manifested superpowers called “Quirks”? Heroes and villains would be battling it out everywhere! Being a hero would mean learning to use your power, but where would you go to study? The Hero Academy of course! But what would you do if you were one of the 20 percent who were born Quirkless?`,
+			inventory: 2,
+			price: 10.75
+		}),
+		Book.create({
+			name: 'My Hero Academia, Vol. 16',
+			imageURL:
+				'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1534537655l/38926380.jpg',
+			description: `What would the world be like if 80 percent of the population manifested superpowers called “Quirks”? Heroes and villains would be battling it out everywhere! Being a hero would mean learning to use your power, but where would you go to study? The Hero Academy of course! But what would you do if you were one of the 20 percent who were born Quirkless?`,
+			inventory: 4,
+			price: 10.75
+		}),
+		Book.create({
+			name: 'My Hero Academia, Vol. 21',
+			imageURL:
+				'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1555270233l/43909390.jpg',
+			description: `What would the world be like if 80 percent of the population manifested superpowers called “Quirks”? Heroes and villains would be battling it out everywhere! Being a hero would mean learning to use your power, but where would you go to study? The Hero Academy of course! But what would you do if you were one of the 20 percent who were born Quirkless?`,
+			inventory: 1,
+			price: 10.75
+		}),
+		Book.create({
+			name: 'Doctor Who: Winner Takes All',
+			imageURL:
+				'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1359986346l/678080.jpg',
+			description: `Rose and the Doctor return to present-day Earth, and become intrigued by the latest craze – the video game, Death to Mantodeans. Is it as harmless as it seems? And why are so many local people going on holiday and never returning? Meanwhile, on another world, an alien war is raging. The Quevvils need to find a new means of attacking the ruthless Mantodeans.`,
+			inventory: 6,
+			price: 13.1
+		}),
+		Book.create({
+			name: 'Toilet-bound Hanako-kun, Vol. 1',
+			imageURL:
+				'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1575999996l/49988130._SX318_SY475_.jpg',
+			description: `"Hanako-san, Hanako-san...are you there?" At Kamome Academy, rumors abound about the school's Seven Mysteries, one of which is Hanako-san. Said to occupy the third stall of the third floor girls' bathroom in the old school building, Hanako-san grants any wish when summoned. Nene Yashiro, an occult-loving high school girl who dreams of romance, ventures into this haunted bathroom...but the Hanako-san she meets there is nothing like she imagined! Kamome Academy's Hanako-san...is a boy!`,
+			inventory: 3,
+			price: 13.1
+		})
+	]);
 
 	// Creating Genres
 	const genres = await Promise.all([
@@ -248,6 +333,10 @@ async function seed() {
 	await author9.addBook(book6);
 	await author10.addBook(book9);
 	await author11.addBook(book10);
+	await author12.addBook(book11);
+	await author13.addBooks([book12, book13, book14]);
+	await author14.addBook(book15);
+	await author15.addBook(book16);
 
 	// Adding User-Cart Association
 	await user1.addCart(cart1);
