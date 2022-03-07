@@ -3,6 +3,8 @@ const {
 	models: { Book, Cart, CartItem, User }
 } = require('../db');
 
+// JOE CR: Let's discuss how to protect and contextualize these routes by the user.
+
 // GET /api/carts/:cartId
 router.get('/:cartId', async (req, res, next) => {
 	try {
