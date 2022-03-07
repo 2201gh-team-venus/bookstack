@@ -22,15 +22,7 @@ class Cart extends React.Component {
 		
 		else if (localStorage.getItem('temp')) {
 			const books = JSON.parse(localStorage.getItem('temp'));
-			const setQuantity = books.map(obj => {
-				if (obj.quantity) {
-					return obj;
-				} else {
-					obj.quantity = 1;
-					return obj;
-				}
-			});
-			this.setState({ books: setQuantity });
+			this.setState({ books: books });
 		}
 	}
 

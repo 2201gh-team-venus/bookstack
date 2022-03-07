@@ -14,13 +14,30 @@ class SingleBook extends React.Component {
 	}
 
 	addToCart() {
+		/* If user is not logged in. */
 		if (!this.props.isLoggedIn) {
+			/* If localstorage variable exist. */
 			if (localStorage.getItem('temp')) {
 				const books = JSON.parse(localStorage.getItem('temp'));
-				books.push(this.props.book);
+
+				/* Checks if book already in cart. */
+				const found = books.find(elm => {
+					if (elm.id === this.props.book.id) return true;
+					return false;
+				});
+
+				if (found === undefined) {
+					/* If book not found in localstorage add it, with key quantity = 0. */
+					const book = { ...this.props.book };
+					book.quantity = 1;
+					books.push(book);
+				}
+
+				/* Set the localstorage item to a string. */
 				localStorage.setItem('temp', JSON.stringify(books));
 			} else {
-				const arr = [this.props.book];
+				/* If localstorage does not exist add it, with key quantity = 0. */
+				const arr = [{ ...this.props.book, quantity: 1 }];
 				localStorage.setItem('temp', JSON.stringify(arr));
 			}
 		}
