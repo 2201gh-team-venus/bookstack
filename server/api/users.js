@@ -139,11 +139,11 @@ router.get('/:userId/carts', async (req, res, next) => {
 	}
 });
 
-// Get /api/users/:userId/carts/pending
-// Find a cart that belong to a user by cartId
+// GET /api/users/:userId/carts/pending
+// Find a cart that belong to a user by cartId (create a new cart for a new user)
 router.get('/:userId/carts/pending', async (req, res, next) => {
 	try {
-		const cartItem = await Cart.findOne({
+		const cart = await Cart.findOne({
 			include: [
 				{
 					model: User,
@@ -157,7 +157,42 @@ router.get('/:userId/carts/pending', async (req, res, next) => {
 				purchased: false
 			}
 		});
-		res.json(cartItem);
+		if (cart) {
+			res.json(cart);
+		} else {
+			const newCart = await Cart.create({
+				userId: req.params.userId,
+				purchased: false
+			})
+			res.status(201).json(newCart);
+		}
+	} catch (err) {
+		next(err);
+	}
+});
+
+// PUT /api/users/:userId/carts/:cartId/purchased
+// User clicks on checkout
+router.put('/:userId/carts/:cartId/purchased', async (req, res, next) => {
+	try {
+		const cart = await Cart.findByPk(req.params.cartId);
+		const updatedCart = await cart.update({
+			purchased: true
+		})
+		res.status(200).json(updatedCart);
+	} catch (err) {
+		next(err);
+	}
+});
+
+// POST /api/users/:userId/carts/:cartId/books/:bookId
+// Add a row to cart_items table
+router.post('/:userId/carts/:cartId/books/:bookId', async (req, res, next) => {
+	try {
+		const cart = await Cart.findByPk(req.params.cartId);
+		const book = await Book.findByPk(req.params.bookId);
+		await book.setCarts(cart);
+		res.sendStatus(201);
 	} catch (err) {
 		next(err);
 	}
