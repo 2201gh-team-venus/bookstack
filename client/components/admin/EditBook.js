@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { addNewBook } from '../../store/books';
 
-class AddBook extends React.Component {
+import { fetchSingleBook } from '../../store/singleBook';
+import { updateBook, _clearBook } from '../../store/books';
+
+class EditBook extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -11,15 +13,34 @@ class AddBook extends React.Component {
 			imageURL: '',
 			description: '',
 			price: 0,
-			inventory: 0,
-			authorName: '',
-			authorBio: ''
+			inventory: 0
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
-	handleChange(evt) {
+	componentDidMount() {
+		this.props.getSingleBook(this.props.match.params.bookId);
+	}
+
+	componentDidUpdate(prevProps) {
+		const book = this.props.book;
+		if (prevProps.book.id !== book.id) {
+			this.setState({
+				name: book.name,
+				imageURL: book.imageURL,
+				description: book.description,
+				price: book.price,
+				inventory: book.inventory
+			});
+		}
+	}
+
+	componentWillUnmount() {
+		this.props.clearBook();
+	}
+
+    handleChange(evt) {
 		this.setState({
 			[evt.target.name]: evt.target.value
 		});
@@ -27,17 +48,16 @@ class AddBook extends React.Component {
 
 	handleSubmit(evt) {
 		evt.preventDefault();
-		this.props.addBook({ ...this.state });
-	}
+		this.props.updateBook({ ...this.props.book, ...this.state });
+    }
 
 	render() {
-		const { name, imageURL, description, price, inventory, authorName, authorBio } =
-			this.state;
+		const { name, imageURL, description, price, inventory } = this.state;
 		const { handleChange, handleSubmit } = this;
 
 		return (
 			<div>
-				<form className="add-book-form">
+				<form className="update-book-form">
 					<label htmlFor="bookName">Title: </label>
 					<input
 						className="book-name"
@@ -77,27 +97,11 @@ class AddBook extends React.Component {
 						value={inventory}
 						onChange={handleChange}
 					/>
-
-					<label htmlFor="authorName">Author: </label>
-					<input
-						className="author-name"
-						name="authorName"
-						value={authorName}
-						onChange={handleChange}
-					/>
-
-					<label htmlFor="authorBio">Author's Bio: </label>
-					<textarea
-						className="author-bio"
-						name="authorBio"
-						value={authorBio}
-						onChange={handleChange}
-					/>
 				</form>
 
 				<div>
-					<button className="add-book-button" type="submit" onClick={handleSubmit}>
-						Add Book
+					<button className="update-book-button" type="submit" onClick={handleSubmit}>
+						Save
 					</button>
 					<Link to="/products">Cancel</Link>
 				</div>
@@ -106,10 +110,16 @@ class AddBook extends React.Component {
 	}
 }
 
+const mapStateToProps = ({ book }) => {
+	return { book };
+};
+
 const mapDispatchToProps = (dispatch, { history }) => {
 	return {
-		addBook: book => dispatch(addNewBook(book, history))
+		getSingleBook: bookId => dispatch(fetchSingleBook(bookId)),
+		updateBook: book => dispatch(updateBook(book, history)),
+		clearBook: () => dispatch(_clearBook())
 	};
 };
 
-export default connect(null, mapDispatchToProps)(AddBook);
+export default connect(mapStateToProps, mapDispatchToProps)(EditBook);
