@@ -21,6 +21,13 @@ class EditBook extends React.Component {
 
 	componentDidMount() {
 		this.props.getSingleBook(this.props.match.params.bookId);
+		this.setState({
+			name: this.props.book.name,
+			imageURL: this.props.book.imageURL,
+			description: this.props.book.description,
+			price: this.props.book.price,
+			inventory: this.props.book.inventory
+		});
 	}
 
 	componentDidUpdate(prevProps) {
@@ -40,7 +47,7 @@ class EditBook extends React.Component {
 		this.props.clearBook();
 	}
 
-    handleChange(evt) {
+	handleChange(evt) {
 		this.setState({
 			[evt.target.name]: evt.target.value
 		});
@@ -49,7 +56,7 @@ class EditBook extends React.Component {
 	handleSubmit(evt) {
 		evt.preventDefault();
 		this.props.updateBook({ ...this.props.book, ...this.state });
-    }
+	}
 
 	render() {
 		const { name, imageURL, description, price, inventory } = this.state;
@@ -100,7 +107,10 @@ class EditBook extends React.Component {
 				</form>
 
 				<div>
-					<button className="update-book-button" type="submit" onClick={handleSubmit}>
+					<button
+						className="update-book-button"
+						type="submit"
+						onClick={handleSubmit}>
 						Save
 					</button>
 					<Link to="/products">Cancel</Link>
