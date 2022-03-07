@@ -31,9 +31,11 @@ Cart.belongsTo(User);
 Book.belongsToMany(Genre, { through: 'book_genre' });
 Genre.belongsToMany(Book, { through: 'book_genre' });
 
-// CartItem has bookID and cartID as FK
-Book.belongsToMany(Cart, { through: CartItem, foreignKey: 'book_id' });
-Cart.belongsToMany(Book, { through: CartItem, foreignKey: 'cart_id' });
+// CartItems has cart_id and book_id as FK
+CartItem.belongsTo(Cart, { foreignKey: 'cart_id' });
+CartItem.belongsTo(Book, { foreignKey: 'book_id' });
+Cart.hasMany(CartItem, { foreignKey: 'cart_id' });
+
 
 // SEQUELIZE HOOK
 Book.beforeValidate(book => {
