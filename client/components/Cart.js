@@ -30,13 +30,15 @@ class Cart extends React.Component {
 		if (prvState.user.id !== this.props.user.id) {
 			this.props.allBooks(this.props.user.id);
 		}
+
+		if (localStorage.getItem('temp')) {
+			localStorage.setItem('temp', JSON.stringify(this.state.books));
+		}
 	}
 
 	componentWillUnmount() {
 		if (this.props.user.id) {
 			this.props.clearBooks();
-		} else if (localStorage.getItem('temp')) {
-			localStorage.setItem('temp', JSON.stringify(this.state.books));
 		}
 	}
 
@@ -102,7 +104,6 @@ class Cart extends React.Component {
 	}
 
 	render() {
-		console.log(this.state);
 		return (
 			<div className="cart">
 				<h3>
