@@ -347,13 +347,13 @@ async function seed() {
 
 	// Adding Book-Cart Association
 	await Promise.all([
-		book1.setCarts(cart1),
-		book2.setCarts(cart2),
-		book2.setCarts(cart3),
-		book2.setCarts(cart4),
-		book2.setCarts(cart5),
-		book3.setCarts(cart1),
-		book4.setCarts(cart1)
+		CartItem.create({ book_id: 1, cart_id: 1 }),
+		CartItem.create({ book_id: 2, cart_id: 2 }),
+		CartItem.create({ book_id: 2, cart_id: 3}),
+		CartItem.create({ book_id: 2, cart_id: 4 }),
+		CartItem.create({ book_id: 2, cart_id: 5 }),
+		CartItem.create({ book_id: 3, cart_id: 1 }),
+		CartItem.create({ book_id: 4, cart_id: 1 }),
 	]);
 
 	// Adding Comment-Book Association
