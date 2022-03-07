@@ -30,25 +30,34 @@ class Cart extends React.Component {
 	handleBooks() {
 		if (this.props.cart.length > 0) {
 			return this.props.cart.map(obj => <CartItems key={obj.id} data={obj} />);
+		} else if (localStorage.getItem('temp')) {
+			const books = JSON.parse(localStorage.getItem('temp'));
+			return books.map(obj => <CartItems key={obj.id} data={obj} />);
 		}
 	}
 
 	handleTotal() {
-		if (this.props.cart.length > 0) {
-			const totalObj = this.props.cart.reduce((prv, cur) => {
+		const priceReducer = object => {
+			return object.reduce((prv, cur) => {
 				return {
 					price: Number(prv.price) + Number(cur.price)
 				};
 			});
+		};
 
-			return totalObj.price;
+		if (this.props.cart.length > 0) {
+			const { price } = priceReducer(this.props.cart);
+			return price;
+		} else if (localStorage.getItem('temp')) {
+			const books = JSON.parse(localStorage.getItem('temp'));
+			const { price } = priceReducer(books);
+			return price;
 		} else {
 			return 0;
 		}
 	}
 
 	render() {
-		console.log(this.props.cart);
 		return (
 			<div className="cart">
 				<h3>
