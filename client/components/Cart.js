@@ -2,17 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import CartItems from './CartItems';
+import CartItemEmpty from './CartItemEmpty';
+import Checkout from './Checkout';
 import { allBooks, _clearBooks } from '../store/cart';
 
 class Cart extends React.Component {
 	constructor() {
 		super();
-		this.state = { books: null };
+		this.state = { books: null, checkout: false };
 
 		this.handleBooks = this.handleBooks.bind(this);
 		this.handleTotal = this.handleTotal.bind(this);
 		this.handleQuantity = this.handleQuantity.bind(this);
 		this.handleDelete = this.handleDelete.bind(this);
+		this.handleCheckout = this.handleCheckout.bind(this);
 	}
 
 	componentDidMount() {
@@ -65,6 +68,10 @@ class Cart extends React.Component {
 					removeBookFn={this.handleDelete}
 				/>
 			));
+		}
+
+		else {
+			return <CartItemEmpty />
 		}
 	}
 
@@ -127,23 +134,35 @@ class Cart extends React.Component {
 		}
 	}
 
+	handleCheckout() {
+		this.setState({ checkout: true });
+	}
+
 	render() {
-		return (
+		return this.state.checkout ? (
+			<Checkout books={this.state.books} total={this.handleTotal()} />
+		) : (
 			<div className="cart">
 				<h3>
 					{this.props.user.username ? this.props.user.username : 'Visitor'} 's
 					books
 				</h3>
-
 				<div className="items">{this.handleBooks()}</div>
-
 				<div className="cart-total">
 					<h4 className="cart-total__text">Total</h4>
 					<h4 className="cart-total__amount">${this.handleTotal()}</h4>
 				</div>
-
 				<div className="cart-checkout">
-					<button className="cart-checkout__btn" type="button">
+					{this.props.user.id ? '' : 'Not logged in. You are ordering as guest'}
+					<button
+						disabled={
+							this.state.books === null || this.state.books.length === 0
+								? true
+								: false
+						}
+						onClick={this.handleCheckout}
+						className="cart-checkout__btn"
+						type="button">
 						Checkout
 					</button>
 				</div>
