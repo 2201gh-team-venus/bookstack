@@ -47,4 +47,20 @@ router.delete('/:cartId/books/:bookId', async (req, res, next) => {
 	}
 });
 
+// PUT /api/carts/:cartId/books/:bookId
+// Edit quantity in a cart
+router.put('/:cartId/books/:bookId', async (req, res, next) => {
+	try {
+		const cart_item = await CartItem.findOne({
+			where: {
+				cart_id: req.params.cartId,
+				book_id: req.params.bookId
+			}
+		})
+		res.json(await cart_item.update(req.body));
+	} catch (error) {
+		next(error);
+	}
+});
+
 module.exports = router;
