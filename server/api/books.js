@@ -71,8 +71,8 @@ router.put('/:bookId', async (req, res, next) => {
 		const book = await Book.findByPk(req.params.bookId);
 
 		if (book) {
-			await book.update({ ...bookData });
-			return res.sendStatus(200);
+			const updatedBook = await book.update({ ...bookData });
+			return res.status(200).send(updatedBook);
 		} else {
 			res.sendStatus(404); /* Book not in database. */
 		}

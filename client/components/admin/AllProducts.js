@@ -58,9 +58,12 @@ class AllProducts extends React.Component {
 								{book.inventory}
 							</p>
 							<div>
-								<button className="admin-buttons" type="button">
-									Edit
-								</button>
+								<Link to={`/books/${book.id}/edit`}>
+									<button className="admin-buttons" type="button">
+										Edit
+									</button>
+								</Link>
+
 								<button
 									className="admin-buttons"
 									type="button"

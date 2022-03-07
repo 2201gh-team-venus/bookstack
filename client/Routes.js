@@ -11,6 +11,7 @@ import AdminPortal from './components/admin/AdminPortal';
 import AllUsers from './components/admin/AllUsers';
 import AllProducts from './components/admin/AllProducts';
 import AddBook from './components/admin/AddBook';
+import EditBook from './components/admin/EditBook';
 
 /**
  * COMPONENT
@@ -35,7 +36,8 @@ class Routes extends Component {
 						<Route path="/cart" component={Cart} />
 						<Route exact path="/books" component={AllBooks} />
 						<Route exact path="/books/add" component={AddBook} />
-						<Route path="/books/:bookId" component={SingleBook} />
+						<Route exact path="/books/:bookId" component={SingleBook} />
+						<Route exact path="/books/:bookId/edit" component={EditBook} />
 						<Redirect to="/home" />
 					</Switch>
 				</div>

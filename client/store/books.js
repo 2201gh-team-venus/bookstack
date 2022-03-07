@@ -3,6 +3,8 @@ import axios from 'axios';
 // ACTION TYPE
 const SET_BOOKS = 'SET_BOOKS';
 const ADD_BOOK = 'ADD_BOOK';
+const UPDATE_BOOK = 'UPDATE_BOOK';
+const CLEAR_BOOK  = 'CLEAR_BOOK';
 const DELETE_BOOK = 'DELETE_BOOK';
 
 // ACTION CREATOR
@@ -19,6 +21,20 @@ const _addBook = book => {
 		book
 	};
 };
+
+const _updateBook = book => {
+	return {
+		type: UPDATE_BOOK,
+		book
+	};
+};
+
+export const _clearBook = book => {
+	return {
+		type: CLEAR_BOOK,
+		book
+	}
+}
 
 const _deleteBook = book => {
 	return {
@@ -43,11 +59,18 @@ export const addNewBook = (book, history) => {
 	};
 };
 
-export const deleteBook = (bookId, history) => {
+export const updateBook = (book, history) => {
+	return async dispatch => {
+		const { data: updatedBook } = await axios.put(`/api/books/${book.id}`, book);
+		dispatch(_updateBook(updatedBook));
+		history.push('/products');
+	};
+};
+
+export const deleteBook = bookId => {
 	return async dispatch => {
 		const { data: deletedBook } = await axios.delete(`api/books/${bookId}`);
 		dispatch(_deleteBook(deletedBook));
-		// history.push('/products');
 	};
 };
 
@@ -58,6 +81,10 @@ export default function booksReducer(state = [], action) {
 			return action.books;
 		case ADD_BOOK:
 			return [...state, action.book];
+		case UPDATE_BOOK:
+			return state.map(book => (book.id === action.book.id ? action.book : book));
+		case CLEAR_BOOK:
+			return [];
 		case DELETE_BOOK:
 			return state.filter(book => book.id !== action.book.id);
 		default:
