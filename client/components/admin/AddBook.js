@@ -38,6 +38,7 @@ class AddBook extends React.Component {
 		return (
 			<div>
 				<form className="add-book-form">
+					{/* JOE CR: Can we consider some creative iteration strategies for building this form? */}
 					<label htmlFor="bookName">Title: </label>
 					<input
 						className="book-name"

@@ -43,6 +43,8 @@ router.post('/', async (req, res, next) => {
 	}
 });
 
+// JOE CR: Most of these routes are currently insecure. Let's discuss how to use tokens to protect the back-end!
+
 /* Find users with admin access. */
 router.get('/admin', async (req, res, next) => {
 	try {
@@ -143,6 +145,7 @@ router.get('/:userId/carts', async (req, res, next) => {
 // Find a cart that belong to a user by cartId
 router.get('/:userId/carts/pending', async (req, res, next) => {
 	try {
+		// JOE CR: A few things to address about this query, very nice stuff tho!
 		const cartItem = await Cart.findOne({
 			include: [
 				{

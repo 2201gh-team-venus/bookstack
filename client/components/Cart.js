@@ -6,6 +6,8 @@ import CartItemEmpty from './CartItemEmpty';
 import Checkout from './Checkout';
 import { allBooks, _clearBooks } from '../store/cart';
 
+// JOE CR: I'd like to review my understanding of this file with y'all.
+
 class Cart extends React.Component {
 	constructor() {
 		super();

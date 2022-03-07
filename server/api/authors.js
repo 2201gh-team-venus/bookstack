@@ -64,6 +64,7 @@ router.delete('/:authorId', async (req, res, next) => {
 		const author = await Author.findByPk(req.params.authorId);
 
 		if (author) {
+			// JOE CR: simply author.destroy() would work just as well.
 			await Author.destroy({ where: { id: author.id } });
 			return res.sendStatus(200);
 		} else {
