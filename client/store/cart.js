@@ -29,6 +29,13 @@ export const allBooks = () => {
 			});
 			const action = _allBooks(books);
 			dispatch(action);
+			return;
+		} else {
+			if (localStorage.getItem('temp')) {
+				const books = JSON.parse(localStorage.getItem('temp'));
+				const action = _allBooks(books);
+				dispatch(action);
+			}
 		}
 	};
 };
@@ -45,6 +52,13 @@ export const addBook = book => {
 			});
 			const action = _addBook(data);
 			dispatch(action);
+			return;
+		} else {
+			if (localStorage.getItem('temp')) {
+				const books = JSON.parse(localStorage.getItem('temp'));
+				const action = _addBook(books);
+				dispatch(action);
+			}
 		}
 	};
 };
@@ -60,6 +74,13 @@ export const removeBook = book => {
 			});
 			const action = _removeBook(data);
 			dispatch(action);
+			return;
+		} else {
+			if (localStorage.getItem('temp')) {
+				const book = JSON.parse(localStorage.getItem('temp'));
+				const action = _removeBook(book);
+				dispatch(action);
+			}
 		}
 	};
 };
@@ -75,6 +96,13 @@ export const editQuantity = book => {
 			});
 			const action = _editQuantity(data);
 			dispatch(action);
+			return;
+		} else {
+			if (localStorage.getItem('temp')) {
+				const book = JSON.parse(localStorage.getItem('temp'));
+				const action = _editQuantity(book);
+				dispatch(action);
+			}
 		}
 	};
 };
