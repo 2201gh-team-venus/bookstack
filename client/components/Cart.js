@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import CartItems from './CartItems';
 import CartItemEmpty from './CartItemEmpty';
 import Checkout from './Checkout';
-import { allBooks, _clearBooks } from '../store/cart';
+import { allBooks, _clearBooks, _addBook, _removeBook, _editQuantity } from '../store/cart';
 
 class Cart extends React.Component {
 	constructor() {
@@ -200,7 +200,10 @@ const mapState = state => {
 const mapDispatch = dispatch => {
 	return {
 		allBooks: () => dispatch(allBooks()),
-		clearBooks: () => dispatch(_clearBooks())
+		clearBooks: () => dispatch(_clearBooks()),
+		addBook: (book) => dispatch(_addBook(book)),
+		removeBook: (book) => dispatch(_deleteBook(book)),
+		editQuantity: (book) => dispatch(_editQuantity(book)),
 	};
 };
 

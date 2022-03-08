@@ -5,16 +5,14 @@ const ALL_BOOKS = 'ALL_BOOKS';
 const CLEAR_BOOKS = 'CLEAR_BOOKS';
 const ADD_BOOK = 'ADD_BOOK';
 const REMOVE_BOOK = 'REMOVE_BOOK';
-const INCREASE_QUANTITY = 'INCREASE_QUANTITY';
-const DECREASE_QUANTITY = 'DECREASE_QUANTITY';
+const EDIT_QUANTITY = 'EDIT_QUANTITY';
 
 /* Action creators. */
 const _allBooks = books => ({ type: ALL_BOOKS, books });
 export const _clearBooks = () => ({ type: CLEAR_BOOKS });
-const _addBook = obj => ({ type: ADD_BOOK, book: obj });
-const _removeBook = obj => ({ type: REMOVE_BOOK, book: obj });
-const _incQnt = obj => ({ type: INCREASE_QUANTITY, book: obj });
-const _decQnt = obj => ({ type: DECREASE_QUANTITY, book: obj });
+const _addBook = book => ({ type: ADD_BOOK, book });
+const _removeBook = book => ({ type: REMOVE_BOOK, book });
+const _editQuantity = book => ({ type: EDIT_QUANTITY, book });
 
 /* Thunk creators. */
 export const allBooks = () => {
@@ -38,8 +36,9 @@ export const allBooks = () => {
 export const addBook = book => {
 	return async dispatch => {
 		const token = window.localStorage.getItem('token');
+		console.log('token', token);
 		if (token) {
-			const { data } = await axios.post(`api/add/books/${book.id}`, book, {
+			const { data } = await axios.post('api/carts/add/books', book, {
 				headers: {
 					authorization: token
 				}
@@ -52,25 +51,31 @@ export const addBook = book => {
 
 export const removeBook = book => {
 	return async dispatch => {
-		const { data } = await axios.put(`api/`, book);
-		const action = _removeBook(data);
-		dispatch(action);
+		const token = window.localStorage.getItem('token');
+		if (token) {
+			const { data } = await axios.put('api/carts/remove/books', book, {
+				headers: {
+					authorization: token
+				}
+			});
+			const action = _removeBook(data);
+			dispatch(action);
+		}
 	};
 };
 
-export const incQnt = book => {
+export const editQuantity = book => {
 	return async dispatch => {
-		const { data } = await axios.put(`api/`, book);
-		const action = _incQnt(data);
-		dispatch(action);
-	};
-};
-
-export const decQnt = book => {
-	return async dispatch => {
-		const { data } = await axios.put(`api/`, book);
-		const action = _decQnt(data);
-		dispatch(action);
+		const token = window.localStorage.getItem('token');
+		if (token) {
+			const { data } = await axios.put(`api/carts/books/quantity`, book, {
+				headers: {
+					authorization: token
+				}
+			});
+			const action = _editQuantity(data);
+			dispatch(action);
+		}
 	};
 };
 
@@ -82,6 +87,12 @@ function cartReducer(state = init, action) {
 			return [...action.books];
 		case CLEAR_BOOKS:
 			return [];
+		case ADD_BOOK:
+			return [...state, action.book];
+		case REMOVE_BOOK:
+			return state.filter(book => book.id !== action.book.id);
+		case EDIT_QUANTITY:
+			return state.map(book => (book.id === action.book.id ? action.book : book));
 		default:
 			return state;
 	}
