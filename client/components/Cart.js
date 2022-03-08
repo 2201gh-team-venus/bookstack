@@ -21,7 +21,7 @@ class Cart extends React.Component {
 	componentDidMount() {
 		// prettier-ignore
 		if (this.props.user.id) {
-			this.props.allBooks(this.props.user.id);
+			this.props.allBooks();
 			/* Fix having both locastorage 'temp 'and 'token'. */
 			localStorage.removeItem('temp');
 		}
@@ -193,7 +193,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
 	return {
-		allBooks: id => dispatch(allBooks(id)),
+		allBooks: () => dispatch(allBooks()),
 		clearBooks: () => dispatch(_clearBooks())
 	};
 };

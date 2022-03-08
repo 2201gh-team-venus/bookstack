@@ -6,7 +6,6 @@ const {
 /* Find all users. */
 router.get('/', async (req, res, next) => {
 	const token = req.headers.authorization;
-	console.log('token in route-->', token);
 	const user = await User.findByToken(token);
 	if (user.role === 'admin') {
 		try {
@@ -144,9 +143,9 @@ router.get('/:userId/carts', async (req, res, next) => {
 	}
 });
 
-// GET /api/users/:userId/carts/pending
+// GET /api/carts/pending
 // Find a cart that belong to a user by cartId (create a new cart for a new user)
-router.get('/:userId/carts/pending', async (req, res, next) => {
+router.get('/carts/pending', async (req, res, next) => {
 	try {
 		const cart = await Cart.findOne({
 			include: [
@@ -202,5 +201,7 @@ router.post('/:userId/carts/:cartId/books/:bookId', async (req, res, next) => {
 		next(err);
 	}
 });
+
+
 
 module.exports = router;
