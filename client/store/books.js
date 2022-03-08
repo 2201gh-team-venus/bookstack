@@ -4,7 +4,7 @@ import axios from 'axios';
 const SET_BOOKS = 'SET_BOOKS';
 const ADD_BOOK = 'ADD_BOOK';
 const UPDATE_BOOK = 'UPDATE_BOOK';
-const CLEAR_BOOK  = 'CLEAR_BOOK';
+const CLEAR_BOOK = 'CLEAR_BOOK';
 const DELETE_BOOK = 'DELETE_BOOK';
 
 // ACTION CREATOR
@@ -33,8 +33,8 @@ export const _clearBook = book => {
 	return {
 		type: CLEAR_BOOK,
 		book
-	}
-}
+	};
+};
 
 const _deleteBook = book => {
 	return {
@@ -53,24 +53,45 @@ export const fetchBooks = () => {
 
 export const addNewBook = (book, history) => {
 	return async dispatch => {
-		const { data: newBook } = await axios.post('/api/books', book);
-		dispatch(_addBook(newBook));
-		history.push('/products');
+		const token = window.localStorage.getItem('token');
+		if (token) {
+			const { data: newBook } = await axios.post('/api/books', book, {
+				headers: {
+					authorization: token
+				}
+			});
+			dispatch(_addBook(newBook));
+			history.push('/products');
+		}
 	};
 };
 
 export const updateBook = (book, history) => {
 	return async dispatch => {
-		const { data: updatedBook } = await axios.put(`/api/books/${book.id}`, book);
-		dispatch(_updateBook(updatedBook));
-		history.push('/products');
+		const token = window.localStorage.getItem('token');
+		if (token) {
+			const { data: updatedBook } = await axios.put(`/api/books/${book.id}`, book, {
+				headers: {
+					authorization: token
+				}
+			});
+			dispatch(_updateBook(updatedBook));
+			history.push('/products');
+		}
 	};
 };
 
 export const deleteBook = bookId => {
 	return async dispatch => {
-		const { data: deletedBook } = await axios.delete(`api/books/${bookId}`);
-		dispatch(_deleteBook(deletedBook));
+		const token = window.localStorage.getItem('token');
+		if (token) {
+			const { data: deletedBook } = await axios.delete(`api/books/${bookId}`, {
+				headers: {
+					authorization: token
+				}
+			});
+			dispatch(_deleteBook(deletedBook));
+		}
 	};
 };
 
