@@ -34,15 +34,16 @@ export const allBooks = () => {
 };
 
 export const addBook = book => {
+	console.log('BOOK IN THUNK ----->', book);
 	return async dispatch => {
 		const token = window.localStorage.getItem('token');
-		console.log('token', token);
 		if (token) {
-			const { data } = await axios.post('api/carts/add/books', book, {
+			const { data } = await axios.post('/api/carts/add/books', book, {
 				headers: {
 					authorization: token
-				}
+				},
 			});
+			console.log('DATA RETURN IN THUNK ----->', data);
 			const action = _addBook(data);
 			dispatch(action);
 		}

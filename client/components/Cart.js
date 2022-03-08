@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import CartItems from './CartItems';
 import CartItemEmpty from './CartItemEmpty';
 import Checkout from './Checkout';
-import { allBooks, _clearBooks, _addBook, _removeBook, _editQuantity } from '../store/cart';
+import { allBooks, _clearBooks, addBook, removeBook, editQuantity } from '../store/cart';
 
 class Cart extends React.Component {
 	constructor() {
