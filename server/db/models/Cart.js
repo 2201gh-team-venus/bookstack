@@ -11,7 +11,7 @@ const Cart = db.define('cart', {
 });
 
 Cart.findPendingCartForUser = async function(userId) {
-	const cart = await Cart.findOne({
+	let cart = await Cart.findOne({
 		include: [
 			{ model: CartItem, include: [ Book ] }
 		],
@@ -20,6 +20,14 @@ Cart.findPendingCartForUser = async function(userId) {
 			userId: userId
 		}
 	});
+
+	if (!cart) {	
+		cart = await Cart.create({
+			purchased: false,
+			userId: userId
+		})
+	}
+
 	return cart;
 }
 
