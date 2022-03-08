@@ -18,12 +18,13 @@ class Cart extends React.Component {
 		this.handleCheckout = this.handleCheckout.bind(this);
 	}
 
-	componentDidMount() {
+	async componentDidMount() {
 		// prettier-ignore
 		if (this.props.user.id) {
-			this.props.allBooks(this.props.user.id);
+			this.props.allBooks();
 			/* Fix having both locastorage 'temp 'and 'token'. */
 			localStorage.removeItem('temp');
+			// await this.setState({books: this.props.cart})
 		}
 		
 		else if (localStorage.getItem('temp')) {
@@ -62,7 +63,7 @@ class Cart extends React.Component {
 					key={obj.id}
 					data={obj}
 					quantityFn={this.handleQuantity}
-					removeBook={this.handleDelete}
+					removeBookFn={this.handleDelete}
 				/>
 			));
 		}
@@ -133,6 +134,7 @@ class Cart extends React.Component {
 	}
 
 	handleDelete(id) {
+		console.log(id);
 		if (this.props.cart.length > 0) {
 			// ! TOFIX: Do something if the user is logged in
 		} else if (localStorage.getItem('temp') && this.state.books !== null) {
@@ -152,6 +154,10 @@ class Cart extends React.Component {
 	}
 
 	render() {
+		// console.log('====>>', this.props.allBooks(this.props.user.id));
+		console.log('state set with props', this.state.books);
+		console.log('props books', this.props.cart);
+
 		return this.state.checkout ? (
 			<Checkout books={this.state.books} total={this.state.total} />
 		) : (
@@ -193,7 +199,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
 	return {
-		allBooks: id => dispatch(allBooks(id)),
+		allBooks: () => dispatch(allBooks()),
 		clearBooks: () => dispatch(_clearBooks())
 	};
 };

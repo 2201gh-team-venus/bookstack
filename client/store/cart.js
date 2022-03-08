@@ -17,19 +17,36 @@ const _incQnt = obj => ({ type: INCREASE_QUANTITY, book: obj });
 const _decQnt = obj => ({ type: DECREASE_QUANTITY, book: obj });
 
 /* Thunk creators. */
-export const allBooks = userId => {
+export const allBooks = () => {
 	return async dispatch => {
-		const { data } = await axios.get(`api/users/${userId}/carts/pending`);
-		const action = _allBooks(data);
-		dispatch(action);
+		const token = window.localStorage.getItem('token');
+		if (token) {
+			const { data } = await axios.get(`api/carts/pending`, {
+				headers: {
+					authorization: token
+				}
+			});
+			const books = data.cart_items.map(cart_item => {
+				return cart_item.book;
+			});
+			const action = _allBooks(books);
+			dispatch(action);
+		}
 	};
 };
 
 export const addBook = book => {
 	return async dispatch => {
-		const { data } = await axios.put(`api/`, book);
-		const action = _addBook(data);
-		dispatch(action);
+		const token = window.localStorage.getItem('token');
+		if (token) {
+			const { data } = await axios.post(`api/add/books/${book.id}`, book, {
+				headers: {
+					authorization: token
+				}
+			});
+			const action = _addBook(data);
+			dispatch(action);
+		}
 	};
 };
 
@@ -62,7 +79,7 @@ const init = [];
 function cartReducer(state = init, action) {
 	switch (action.type) {
 		case ALL_BOOKS:
-			return action.books ? [...action.books.books] : [];
+			return [...action.books];
 		case CLEAR_BOOKS:
 			return [];
 		default:
