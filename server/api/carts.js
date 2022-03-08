@@ -3,33 +3,39 @@ const {
 	models: { Book, Cart, CartItem, User }
 } = require('../db');
 
-// GET /api/carts/:cartId
-router.get('/:cartId', async (req, res, next) => {
-	try {
-		const cartItems = await Cart.findAll({
-			include: [Book, User],
-			where: { id: req.params.cartId }
-		});
-		res.json(cartItems);
-	} catch (error) {
-		next(error);
+// GET /api/carts
+router.get('/pending', async (req, res, next) => {
+	const token = req.headers.authorization;
+	const user = await User.findByToken(token);
+	if (user) {
+		try {
+			const cart = await Cart.findPendingCartForUser(user.id);
+			res.json(cart);
+		} catch (error) {
+			next(error);
+		}
 	}
 });
 
-// POST /api/carts/:cartId/books/:bookId
+// POST /api/carts/add/books/:bookId
 // Add a book to a cart
-router.post('/:cartId/books/:bookId', async (req, res, next) => {
-	try {
-		const cart_item = await CartItem.create({
-			quantity: 1,
-			cart_id: req.params.cartId,
-			book_id: req.params.bookId
-		});
-		res.status(201).json(cart_item);
-	} catch (error) {
-		next(error);
-	}
-});
+router.post('/add/books/:bookId', async (req, res, next) => {
+	const token = req.headers.authorization;
+	const user = await User.findByToken(token);
+	if (user) {
+		try {
+			const cart = await Cart.findPendingCartForUser(user.id);
+
+			await CartItem.create({
+				quantity: 1,
+				cart_id: cart.id,
+				book_id: req.params.bookId
+			});
+			res.sendStatus(201);
+		} catch (error) {
+			next(error);
+		}
+}});
 
 // DELETE /api/carts/:cartId/books/:bookId
 // remove book(s) from a cart

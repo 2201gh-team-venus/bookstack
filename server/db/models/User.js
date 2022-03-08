@@ -8,20 +8,19 @@ const dotenv = require('dotenv').config();
 const SALT_ROUNDS = 5;
 
 const User = db.define('user', {
-	// name: {
-	// 	type: Sequelize.STRING
-	// },
 	username: {
 		type: Sequelize.STRING,
-		allowNull: false
+		allowNull: false,
+		unique: true
 	},
-	// email: {
-	// 	type: Sequelize.STRING,
-	// 	allowNull: false,
-	// 	validate: {
-	// 		isEmail: true
-	// 	}
-	// },
+	email: {
+		type: Sequelize.STRING,
+		allowNull: false,
+		// validate: {
+		// 	isEmail: false
+		// },
+		unique: true
+	},
 	password: {
 		type: Sequelize.STRING,
 		allowNull: false
@@ -30,7 +29,8 @@ const User = db.define('user', {
 		// }
 	},
 	role: {
-		type: Sequelize.ENUM('user', 'admin')
+		type: Sequelize.ENUM('user', 'admin'),
+		default: 'user'
 	}
 });
 

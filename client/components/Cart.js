@@ -21,8 +21,7 @@ class Cart extends React.Component {
 	async componentDidMount() {
 		// prettier-ignore
 		if (this.props.user.id) {
-			const x = await this.props.allBooks(this.props.user.id)
-			console.log('XXX',x)
+			this.props.allBooks();
 			/* Fix having both locastorage 'temp 'and 'token'. */
 			localStorage.removeItem('temp');
 			// await this.setState({books: this.props.cart})
@@ -200,7 +199,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
 	return {
-		allBooks: id => dispatch(allBooks(id)),
+		allBooks: () => dispatch(allBooks()),
 		clearBooks: () => dispatch(_clearBooks())
 	};
 };
