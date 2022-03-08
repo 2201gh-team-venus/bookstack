@@ -10,20 +10,24 @@ function CartItems(props) {
 				<h4 className="items__name">{props.data.name}</h4>
 				<div className="items__quantity-wrapper">
 					<button
-						onClick={() => props.quantityFn(props.data.id, 'increase')}
+						onClick={() =>
+							props.quantityFn(props.quantity, 'increase', props.data)
+						}
 						type="button">
 						increase
 					</button>
-					<div className="items__quantity">{props.data.quantity}</div>
+					<div className="items__quantity">{props.quantity}</div>
 					<button
-						onClick={() => props.quantityFn(props.data.id, 'decrease')}
+						onClick={() =>
+							props.quantityFn(props.quantity, 'decrease', props.data)
+						}
 						type="button">
 						decrease
 					</button>
 				</div>
 				<div className="items__price">${props.data.price}</div>
 				<button
-					onClick={() => props.removeBookFn(props.data.id)}
+					onClick={() => props.removeBookFn(props.data)}
 					type="button"
 					className="items__remove">
 					remove

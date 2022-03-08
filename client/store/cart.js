@@ -24,7 +24,8 @@ export const cartItems = () => {
 					authorization: token
 				}
 			});
-			const action = _cartItems(cartItems);
+			console.log(cartItems);
+			const action = _cartItems(cartItems.cart_items);
 			dispatch(action);
 			return;
 		} else {
@@ -44,7 +45,7 @@ export const addBook = book => {
 			const { data: newBook } = await axios.post('/api/carts/add/books', book, {
 				headers: {
 					authorization: token
-				},
+				}
 			});
 			const action = _addBook(newBook);
 			dispatch(action);
@@ -63,11 +64,15 @@ export const removeBook = book => {
 	return async dispatch => {
 		const token = window.localStorage.getItem('token');
 		if (token) {
-			const { data: deletedBook } = await axios.put('/api/carts/remove/books', book, {
-				headers: {
-					authorization: token
+			const { data: deletedBook } = await axios.put(
+				'/api/carts/remove/books',
+				book,
+				{
+					headers: {
+						authorization: token
+					}
 				}
-			});
+			);
 			const action = _removeBook(deletedBook);
 			dispatch(action);
 			return;
@@ -81,15 +86,19 @@ export const removeBook = book => {
 	};
 };
 
-export const editQuantity = book => {
+export const editQuantity = (book, quantity) => {
 	return async dispatch => {
 		const token = window.localStorage.getItem('token');
 		if (token) {
-			const { data: updatedBook } = await axios.put(`/api/carts/books/quantity`, book, {
-				headers: {
-					authorization: token
+			const { data: updatedBook } = await axios.put(
+				`/api/carts/books/quantity`,
+				{ book, quantity },
+				{
+					headers: {
+						authorization: token
+					}
 				}
-			});
+			);
 			const action = _editQuantity(updatedBook);
 			dispatch(action);
 			return;

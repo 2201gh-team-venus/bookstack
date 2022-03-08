@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import CartItems from './CartItems';
 import CartItemEmpty from './CartItemEmpty';
 import Checkout from './Checkout';
-import { allBooks, _clearBooks, addBook, removeBook, editQuantity } from '../store/cart';
+import { cartItems, _clearBooks, addBook, removeBook, editQuantity } from '../store/cart';
 
 class Cart extends React.Component {
 	constructor() {
@@ -12,40 +12,27 @@ class Cart extends React.Component {
 		this.state = { books: null, total: 0, checkout: false };
 
 		this.handleBooks = this.handleBooks.bind(this);
-		this.handleTotal = this.handleTotal.bind(this);
 		this.handleQuantity = this.handleQuantity.bind(this);
-		this.handleDelete = this.handleDelete.bind(this);
-		this.handleCheckout = this.handleCheckout.bind(this);
+
+		this.handleTotal = this.handleTotal.bind(this);
+
+		// this.handleDelete = this.handleDelete.bind(this);
+		// this.handleCheckout = this.handleCheckout.bind(this);
 	}
 
-	async componentDidMount() {
-		// prettier-ignore
-		if (this.props.user.id) {
-			this.props.allBooks();
-			/* Fix having both locastorage 'temp 'and 'token'. */
-			localStorage.removeItem('temp');
-			// await this.setState({books: this.props.cart})
-		}
-		
-		else if (localStorage.getItem('temp')) {
-			const books = JSON.parse(localStorage.getItem('temp'));
-			this.setState({ books: books });
-			console.log(this.state.books);
+	componentDidMount() {
+		if (localStorage.getItem('token')) {
+			this.props.cartItems();
+			this.handleTotal();
 		}
 	}
 
 	componentDidUpdate(prvProps, prvState) {
-		/* If user not logged-in get localstorage 'temp' item. */
 		if (prvProps.user.id !== this.props.user.id) {
-			this.props.allBooks(this.props.user.id);
-		} else if (localStorage.getItem('temp')) {
-			localStorage.setItem('temp', JSON.stringify(this.state.books));
-		}
-
-		if (JSON.stringify(prvState.books) !== JSON.stringify(this.state.books)) {
-			this.handleTotal();
-		} else {
-			console.log('the same');
+			if (prvState.total !== this.state.total) {
+				this.handleTotal();
+			}
+			this.props.cartItems();
 		}
 	}
 
@@ -56,97 +43,53 @@ class Cart extends React.Component {
 	}
 
 	handleBooks() {
-		// prettier-ignore
-		if (this.props.cart.length > 0) {
-			return this.props.cart.map(obj => (
-				<CartItems
-					key={obj.id}
-					data={obj}
-					quantityFn={this.handleQuantity}
-					removeBookFn={this.handleDelete}
-				/>
-			));
-		}
-		
-		else if (this.state.books && this.state.books.length > 0) {
-			return this.state.books.map(obj => (
-				<CartItems
-					key={obj.id}
-					data={obj}
-					quantityFn={this.handleQuantity}
-					removeBookFn={this.handleDelete}
-				/>
-			));
-		}
-
-		else {
-			return <CartItemEmpty />
-		}
+		return this.props.cart.map(obj => (
+			<CartItems
+				key={obj.id}
+				data={obj.book}
+				quantity={obj.quantity}
+				quantityFn={this.handleQuantity}
+				removeBookFn={this.handleDelete}
+			/>
+		));
 	}
 
 	handleTotal() {
 		/* Method sets state, returns null */
-		const priceReducer = object => {
-			const price = object.reduce((prv, cur) => {
+		const priceReducer = books => {
+			const price = books.reduce((prv, cur) => {
+				console.log(prv);
+				console.log(cur);
+
 				return Number(prv) + Number(cur.price) * Number(cur.quantity);
 			}, 0);
+
 			return parseFloat(price).toFixed(2);
 		};
 
 		if (this.props.cart.length > 0) {
 			const total = priceReducer(this.props.cart);
+			console.log(total);
+			console.log(this.props.cart);
 			this.setState({ total: total });
-			return null;
-		} else if (this.state.books !== null && this.state.books.length > 0) {
-			const total = priceReducer(this.state.books);
-			console.log('current total', total);
-			this.setState({ total: total });
-			return null;
-		} else {
-			this.setState({ total: 0 });
 			return null;
 		}
 	}
 
-	handleQuantity(id, type) {
-		/* Method sets state, returns undefined */
-		const prvBooks = [...this.state.books];
+	handleQuantity(quantity, type, book) {
+		let editQuantity = 0;
+		if (type === 'increase') {
+			editQuantity = quantity + 1;
+		} else if (type === 'decrease') {
+			editQuantity = quantity - 1;
+		}
 
-		const changeQuantity = prvBooks.map(obj => {
-			if (obj.id === id) {
-				if (type === 'increase') {
-					obj.quantity += 1;
-				}
-
-				if (type === 'decrease' && obj.quantity > 1) {
-					obj.quantity -= 1;
-				}
-			}
-			console.log(obj, 'state books');
-			return obj;
-		});
-
-		this.setState({
-			books: changeQuantity
-		});
-
-		this.handleTotal();
+		this.props.editQuantity(book, editQuantity);
+		// this.handleTotal();
 	}
 
-	handleDelete(id) {
-		console.log(id);
-		if (this.props.cart.length > 0) {
-			// ! TOFIX: Do something if the user is logged in
-		} else if (localStorage.getItem('temp') && this.state.books !== null) {
-			const prvBooks = [...this.state.books];
-
-			const delBook = prvBooks.filter(obj => {
-				if (obj.id !== id) return true;
-				return false;
-			});
-
-			this.setState({ books: delBook });
-		}
+	handleDelete(book) {
+		this.props.removeBook(book);
 	}
 
 	handleCheckout() {
@@ -154,10 +97,7 @@ class Cart extends React.Component {
 	}
 
 	render() {
-		// console.log('====>>', this.props.allBooks(this.props.user.id));
-		console.log('state set with props', this.state.books);
-		console.log('props books', this.props.cart);
-
+		console.log(this.props);
 		return this.state.checkout ? (
 			<Checkout books={this.state.books} total={this.state.total} />
 		) : (
@@ -167,6 +107,7 @@ class Cart extends React.Component {
 					books
 				</h3>
 				<div className="items">{this.handleBooks()}</div>
+
 				<div className="cart-total">
 					<h4 className="cart-total__text">Total</h4>
 					<h4 className="cart-total__amount">${this.state.total}</h4>
@@ -199,11 +140,10 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
 	return {
-		allBooks: () => dispatch(allBooks()),
+		cartItems: () => dispatch(cartItems()),
 		clearBooks: () => dispatch(_clearBooks()),
-		addBook: (book) => dispatch(_addBook(book)),
-		removeBook: (book) => dispatch(_deleteBook(book)),
-		editQuantity: (book) => dispatch(_editQuantity(book)),
+		// removeBook: book => dispatch(deleteBook(book)),
+		editQuantity: (book, quantity) => dispatch(editQuantity(book, quantity))
 	};
 };
 

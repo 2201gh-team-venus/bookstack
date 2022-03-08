@@ -71,6 +71,7 @@ router.delete('/remove/books', async (req, res, next) => {
 router.put('/books/quantity', async (req, res, next) => {
 	const token = req.headers.authorization;
 	const user = await User.findByToken(token);
+	const quantity = req.body.quantity;
 	if (user) {
 		try {
 			const cart = await Cart.findPendingCartForUser(user.id);
@@ -78,10 +79,11 @@ router.put('/books/quantity', async (req, res, next) => {
 				const cartItem = await CartItem.findOne({
 					where: {
 						cart_id: cart.id,
-						book_id: req.body.id
+						book_id: req.body.book.id
 					}
 				});
-				res.json(await cartItem.update(req.body));
+				// res.json(await cartItem.update(req.body));
+				res.json(await cartItem.update({ quantity: quantity }));
 			}
 		} catch (error) {
 			next(error);
