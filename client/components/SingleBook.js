@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchSingleBook } from '../store/singleBook';
+import { addBook } from '../store/cart';
 import CommentList from './CommentsList';
 import CommentForm from './CommentForm';
 
@@ -40,6 +41,8 @@ class SingleBook extends React.Component {
 				const arr = [{ ...this.props.book, quantity: 1 }];
 				localStorage.setItem('temp', JSON.stringify(arr));
 			}
+		} else {
+			this.props.addBook(this.props.book);
 		}
 	}
 
@@ -77,13 +80,14 @@ const mapStateToProps = state => {
 	return {
 		book: state.book,
 		isLoggedIn: !!state.auth.id,
-		users: state.users //need cart to be have backend to have info in []
+		// users: state.users //need cart to be have backend to have info in []
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		loadSingleBook: bookId => dispatch(fetchSingleBook(bookId))
+		loadSingleBook: bookId => dispatch(fetchSingleBook(bookId)),
+		addBook: book => dispatch(addBook(book))
 	};
 };
 
