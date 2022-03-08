@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {
-    models: { Cart, CartItem, User }
+    models: { Cart, CartItem, User, Book }
 } = require('../db');
 
 // GET /api/carts
@@ -44,9 +44,9 @@ router.post('/add/books', async (req, res, next) => {
     }
 });
 
-// DELETE /api/carts/remove/books
+// DELETE /api/carts/remove/books/:bookId
 // Remove book(s) from a cart
-router.delete('/remove/books', async (req, res, next) => {
+router.delete('/remove/books/:bookId', async (req, res, next) => {
     const token = req.headers.authorization;
     const user = await User.findByToken(token);
     if (user) {
@@ -55,7 +55,7 @@ router.delete('/remove/books', async (req, res, next) => {
             await CartItem.destroy({
                 where: {
                     cart_id: cart.id,
-                    book_id: req.body.id
+                    book_id: req.params.bookId
                 }
             });
             res.sendStatus(204);
@@ -76,13 +76,18 @@ router.put('/books/quantity', async (req, res, next) => {
             const cart = await Cart.findPendingCartForUser(user.id);
             if (cart) {
                 const cartItem = await CartItem.findOne({
+					include: [
+						Book
+					],
                     where: {
                         cart_id: cart.id,
                         book_id: req.body.book.id
                     }
                 });
                 // res.json(await cartItem.update(req.body));
-                res.json(await cartItem.update({ quantity: quantity }));
+				const result = await cartItem.update({ quantity: quantity });
+				console.log('result-->', result);
+                res.json(result);
             }
         } catch (error) {
             next(error);

@@ -13,7 +13,7 @@ class Cart extends React.Component {
         this.handleBooks = this.handleBooks.bind(this);
         this.handleQuantity = this.handleQuantity.bind(this);
         this.handleTotal = this.handleTotal.bind(this);
-        // this.handleDelete = this.handleDelete.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
         // this.handleCheckout = this.handleCheckout.bind(this);
     }
     componentDidMount() {
@@ -73,9 +73,10 @@ class Cart extends React.Component {
         }
         this.props.editQuantity(book, editQuantity);
         // this.handleTotal();
+		// this.props.cartItems();
     }
     handleDelete(book) {
-        this.props.removeBook(book);
+        this.props.deleteBook(book);
     }
     handleCheckout() {
         this.setState({ checkout: true });
@@ -125,7 +126,7 @@ const mapDispatch = dispatch => {
     return {
         cartItems: () => dispatch(cartItems()),
         clearBooks: () => dispatch(_clearBooks()),
-        // removeBook: book => dispatch(deleteBook(book)),
+        deleteBook: book => dispatch(removeBook(book)),
         editQuantity: (book, quantity) => dispatch(editQuantity(book, quantity))
     };
 };
