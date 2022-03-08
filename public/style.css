@@ -1,8 +1,10 @@
 @import url('cart.css');
 @import url('admin.css');
+@import url('checkout.css');
 
 :root {
 	--clr-accent-light: rgb(247, 247, 247);
+	--clr-accent-dark: rgb(216, 216, 216);
 }
 
 body {
