@@ -134,10 +134,7 @@ function cartReducer(state = init, action) {
         case ADD_BOOK_TO_CART:
             return [...state, action.book];
         case REMOVE_BOOK:
-			// console.log('ACTION BOOKID---->', action.bookId)
-			// console.log('STATE ---->', state);
             return state.filter(book => book.book_id !== action.bookId);
-			// console.log('NEW BOOK ------>', newBooks)
         case EDIT_QUANTITY:
             return state.map(cartItem => (
 				cartItem.book_id === action.cartItem.book_id ? action.cartItem : cartItem

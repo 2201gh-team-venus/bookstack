@@ -29,7 +29,7 @@ function CartItems(props) {
 							+
 						</button>
 					</div>
-					<div className="items__price">${props.data.price}</div>
+					<div className="items__price">${Number(props.data.price).toFixed(2)}</div>
 					<button
 						onClick={() => props.removeBookFn(props.data)}
 						type="button"
