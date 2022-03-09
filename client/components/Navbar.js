@@ -61,7 +61,7 @@ class Navbar extends React.Component {
 	render() {
 		const { handleClick, isLoggedIn, isAdmin } = this.props;
 		const totalBook = this.state.total;
-		console.log("this.state", this.state)
+		
 
 		if (isLoggedIn && isAdmin) {
 			return (
@@ -119,6 +119,7 @@ class Navbar extends React.Component {
 			</div>
 		);
 	}
+}
 
 /**
  * CONTAINER
