@@ -30,13 +30,13 @@ export const cartItems = () => {
         } else {
             if (localStorage.getItem('temp')) {
                 const books = JSON.parse(localStorage.getItem('temp'));
-				const newCartItems = books.map(book => {
-					return {
-						book,
-						book_id: book.id,
-						quantity: 1
-					}
-				});
+				        const newCartItems = books.map(book => {
+                    return {
+                      book,
+                      book_id: book.id,
+                      quantity: 1
+                    }
+				    });
                 const action = _cartItems(newCartItems);
                 dispatch(action);
             }
@@ -82,7 +82,7 @@ export const removeBook = book => {
             dispatch(action);
             return;
         } else {
-            if (localStorage.getItem('temp')) {
+            if (window.localStorage.getItem('temp')) {
                 const book = JSON.parse(localStorage.getItem('temp'));
                 const action = _removeBook(book);
                 dispatch(action);
@@ -110,13 +110,14 @@ export const editQuantity = (book, quantity) => {
         } else {
             if (localStorage.getItem('temp')) {
                 const books = JSON.parse(localStorage.getItem('temp'));
-				const updatedBook = {
-					book,
-					book_id: book.id,
-					quantity: quantity
-				}
-                const action = _editQuantity(updatedBook);
-                dispatch(action);
+				        const updatedBook = {
+					          book,
+					          book_id: book.id,
+					          quantity: quantity
+                }
+				       
+            const action = _editQuantity(updatedBook);
+            dispatch(action);
             }
         }
     };

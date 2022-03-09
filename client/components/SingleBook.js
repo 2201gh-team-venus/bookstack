@@ -4,14 +4,19 @@ import { fetchSingleBook } from '../store/singleBook';
 import { addBookToCart } from '../store/cart';
 import CommentList from './CommentsList';
 import CommentForm from './CommentForm';
+import { cartItems } from '../store/cart';
+
 
 class SingleBook extends React.Component {
 	constructor() {
 		super();
 		this.addToCart = this.addToCart.bind(this);
+
 	}
 	componentDidMount() {
 		this.props.loadSingleBook(this.props.match.params.bookId);
+		this.props.cartItems();
+
 	}
 
 	addToCart() {
@@ -47,6 +52,7 @@ class SingleBook extends React.Component {
 	}
 
 	render() {
+
 		if (!this.props.book) {
 			return <h1>No book found</h1>;
 		}
@@ -62,13 +68,15 @@ class SingleBook extends React.Component {
 					<h2>{name}</h2>
 					<h4>By: {author.name}</h4>
 					<p>{description}</p>
-					<h2>${price ? Number(price).toFixed(2) : 0}</h2>
+					<h3>${price ? Number(price).toFixed(2) : 0}</h3>
 					<button onClick={this.addToCart}>Add to Cart</button>
-
+					<br />
+					<br />
+					<hr />
 					<div className="reviews">
-						<h4>Reviews:</h4>
-						<CommentForm />
+						<h2>Reviews</h2>
 						<CommentList comments={comments} />
+						<CommentForm />
 					</div>
 				</div>
 			</div>
@@ -80,6 +88,7 @@ const mapStateToProps = state => {
 	return {
 		book: state.book,
 		isLoggedIn: !!state.auth.id,
+		cart: state.cart
 	};
 };
 
@@ -88,10 +97,15 @@ const mapDispatchToProps = dispatch => {
 		loadSingleBook: bookId => dispatch(fetchSingleBook(bookId)),
 <<<<<<< Updated upstream
 		addBookToCart: book => dispatch(addBookToCart(book))
+<<<<<<< HEAD
 =======
 		addBookToCart: book => dispatch(addBookToCart(book)),
 		cartItems: () => dispatch(cartItems())
 >>>>>>> Stashed changes
+=======
+		addBook: book => dispatch(addBook(book)),
+		cartItems: () => dispatch(cartItems())
+>>>>>>> 654f382c322ced17ae32b1645fca0512c66da972
 	};
 };
 

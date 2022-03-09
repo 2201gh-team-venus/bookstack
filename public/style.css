@@ -1,6 +1,7 @@
 @import url('cart.css');
 @import url('admin.css');
 @import url('checkout.css');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed&display=swap');
 
 :root {
 	--clr-accent-light: rgb(247, 247, 247);
@@ -8,15 +9,33 @@
 }
 
 body {
-	font-family: sans-serif;
+	font-family: 'Barlow Condensed', sans-serif;
+}
+
+nav {
+	font-size: 17px;
+	background: #d55b3e;
 }
 
 a {
 	text-decoration: none;
 }
 
+nav a {
+	color: #fcf4d9;
+}
+
 button {
 	cursor: pointer;
+	background-color: #00aaa0;
+	border: none;
+	color: white;
+	padding: 10px 25px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 14px;
+	border-radius: 12px;
 }
 
 label {
@@ -35,7 +54,6 @@ form div {
 
 .books {
 	display: flex;
-	/* justify-content: space-between; */
 	flex-wrap: wrap;
 }
 
@@ -53,6 +71,7 @@ form div {
 }
 
 .book {
+	margin-top: 40px;
 	display: flex;
 	justify-content: center;
 }
@@ -66,4 +85,8 @@ form div {
 .book-info {
 	width: 450px;
 	margin-left: 40px;
+}
+
+.book-info h2 {
+	color: #97442f;
 }
