@@ -62,13 +62,15 @@ class SingleBook extends React.Component {
 					<h2>{name}</h2>
 					<h4>By: {author.name}</h4>
 					<p>{description}</p>
-					<h2>${price ? Number(price).toFixed(2) : 0}</h2>
+					<h3>${price ? Number(price).toFixed(2) : 0}</h3>
 					<button onClick={this.addToCart}>Add to Cart</button>
-
+					<br />
+					<br />
+					<hr />
 					<div className="reviews">
-						<h4>Reviews:</h4>
-						<CommentForm />
+						<h2>Reviews</h2>
 						<CommentList comments={comments} />
+						<CommentForm />
 					</div>
 				</div>
 			</div>

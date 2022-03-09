@@ -47,7 +47,7 @@ function Checkout(props) {
 					type="email"
 					placeholder="email"
 				/>
-				<button className="checkout-form__btn" type="submit">
+				<button type="submit">
 					Enter email
 				</button>
 			</form>

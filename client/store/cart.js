@@ -29,8 +29,8 @@ export const cartItems = () => {
             dispatch(action);
             return;
         } else {
-            if (localStorage.getItem('temp')) {
-                const books = JSON.parse(localStorage.getItem('temp'));
+            if (window.localStorage.getItem('temp')) {
+                const books = JSON.parse(window.localStorage.getItem('temp'));
                 const action = _allBooks(books);
                 dispatch(action);
             }
@@ -52,7 +52,7 @@ export const addBook = book => {
             return;
         } else {
             if (localStorage.getItem('temp')) {
-                const books = JSON.parse(localStorage.getItem('temp'));
+                const books = JSON.parse(window.localStorage.getItem('temp'));
                 const action = _addBook(books);
                 dispatch(action);
             }
@@ -76,7 +76,7 @@ export const removeBook = book => {
             dispatch(action);
             return;
         } else {
-            if (localStorage.getItem('temp')) {
+            if (window.localStorage.getItem('temp')) {
                 const book = JSON.parse(localStorage.getItem('temp'));
                 const action = _removeBook(book);
                 dispatch(action);
@@ -98,15 +98,14 @@ export const editQuantity = (book, quantity) => {
                     }
                 }
             );
-			console.log('updated book-->', updatedBook);
             const action = _editQuantity(updatedBook);
             dispatch(action);
 			// const action = cartItems();
             // dispatch(action);
             return;
         } else {
-            if (localStorage.getItem('temp')) {
-                const book = JSON.parse(localStorage.getItem('temp'));
+            if (window.localStorage.getItem('temp')) {
+                const book = JSON.parse(window.localStorage.getItem('temp'));
                 const action = _editQuantity(book);
                 dispatch(action);
             }
@@ -117,7 +116,6 @@ export const editQuantity = (book, quantity) => {
 const init = [];
 
 function cartReducer(state = init, action) {
-	console.log('state-->', state);
     switch (action.type) {
         case CART_ITEMS:
             return [...action.cartItems];

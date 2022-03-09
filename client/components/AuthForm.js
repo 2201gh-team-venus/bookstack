@@ -29,7 +29,7 @@ const AuthFormSignUp = props => {
 					</label>
 					<input name="password" type="password" />
 				</div>
-				<br />
+				<hr />
 				<div>
 					<button type="submit">{displayName}</button>
 				</div>
@@ -57,7 +57,7 @@ const AuthFormLogin = props => {
 					</label>
 					<input name="password" type="password" />
 				</div>
-				<br />
+				<hr />
 				<div>
 					<button type="submit">{displayName}</button>
 				</div>
