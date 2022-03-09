@@ -20,8 +20,6 @@ router.get('/pending', async (req, res, next) => {
 // POST /api/carts/add/books
 // Add a book to a cart
 router.post('/add/books', async (req, res, next) => {
-    console.log('API BOOK ----->', req.body);
-    console.log('TOKEN---->', req.headers.authorization);
     const token = req.headers.authorization;
     const user = await User.findByToken(token);
     if (user) {
@@ -52,7 +50,7 @@ router.delete('/remove/books/:bookId', async (req, res, next) => {
     if (user) {
         try {
             const cart = await Cart.findPendingCartForUser(user.id);
-            await CartItem.destroy({
+            const deletedCartItem = await CartItem.destroy({
                 where: {
                     cart_id: cart.id,
                     book_id: req.params.bookId

@@ -11,6 +11,7 @@ export class AllBooks extends React.Component {
 		if (!this.props.books || this.props.books.length === 0) {
 			return <h1>No Books!</h1>;
 		}
+		
 		return (
 			<div>
 				<h1>All Books</h1>
