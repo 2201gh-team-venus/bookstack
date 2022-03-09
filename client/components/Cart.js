@@ -14,10 +14,11 @@ class Cart extends React.Component {
 		this.handleQuantity = this.handleQuantity.bind(this);
 		this.handleTotal = this.handleTotal.bind(this);
 		this.handleDelete = this.handleDelete.bind(this);
-		// this.handleCheckout = this.handleCheckout.bind(this);
+		this.handleCheckout = this.handleCheckout.bind(this);
 	}
 	componentDidMount() {
 		this.props.cartItems();
+		this.setState({ books: this.props.cart });
 		// this.handleTotal();
 	}
 	componentDidUpdate(prvProps, prvState) {
@@ -57,8 +58,6 @@ class Cart extends React.Component {
 	}
 
 	handleTotal() {
-		console.log('CART------>', this.props.cart);
-		console.log('STATE ---->', this.state);
 		/* Method sets state, returns null */
 		const priceReducer = books => {
 			const price = books.reduce((prv, cur) => {
@@ -98,7 +97,6 @@ class Cart extends React.Component {
 	}
 
 	render() {
-		console.log('CART------>', this.props.cart);
 		return this.state.checkout ? (
 			<Checkout books={this.state.books} total={this.state.total} />
 		) : (
@@ -118,11 +116,11 @@ class Cart extends React.Component {
 						? ''
 						: 'You are not currently logged in.  Click checkout to complete your order as guest.  Thank you for shopping at Bookstack!  '}
 					<button
-						disabled={
-							this.state.books === null || this.state.books.length === 0
-								? true
-								: false
-						}
+						// disabled={
+						// 	this.state.books === null || this.state.books.length === 0
+						// 		? true
+						// 		: false
+						// }
 						onClick={this.handleCheckout}
 						className="cart-checkout__btn"
 						type="button">
