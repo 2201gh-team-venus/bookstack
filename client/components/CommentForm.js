@@ -32,9 +32,11 @@ class CommentForm extends Component {
         return (
             <form id='comment-form' onSubmit={handleSubmit}>
     
-            <label htmlFor='message'>Add Comment:</label>
-            <input name='message' onChange={handleChange} value={message} />
-    
+            <label htmlFor='message'>Leave a Review:</label>
+            <br />
+            <textarea name='message' onChange={handleChange} value={message} />
+            <br />
+            <br />
             <button type='submit'>Submit</button>
           </form>
         )
