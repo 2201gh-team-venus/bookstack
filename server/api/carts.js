@@ -84,9 +84,7 @@ router.put('/books/quantity', async (req, res, next) => {
                         book_id: req.body.book.id
                     }
                 });
-                // res.json(await cartItem.update(req.body));
 				const result = await cartItem.update({ quantity: quantity });
-				console.log('result-->', result);
                 res.json(result);
             }
         } catch (error) {
