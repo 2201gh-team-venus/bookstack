@@ -17,10 +17,10 @@ class Navbar extends React.Component {
 	getTotalQuantity() {
 		// const books = JSON.parse(window.localStorage.getItem('temp'));
 		// console.log("this.props", this.props)
-		console.log("this.props.cart", this.props.cart)
+		// console.log("this.props.cart", this.props.cart)
 
 		
-		let sum = 0;
+		// let sum = 0;
 		let sum1= 0;
 		// if (books) {
 		// 	books.map(book => (sum += book.quantity));
@@ -28,12 +28,12 @@ class Navbar extends React.Component {
 		// 	return sum;
 		// }
 	// 	else {
-			const signedInBooks=  this.props.cart
-			console.log("signnedINBooks", signedInBooks)
+			const signedInBooks=  this.props.cart || []
+			// console.log("signnedINBooks", signedInBooks)
 
 			if(signedInBooks){
 			signedInBooks.map(book => (sum1 += book.quantity));
-			console.log("sum1===>",sum1)
+			// console.log("sum1===>",sum1)
 			return sum1;
 			}
 	// 	}
@@ -50,10 +50,18 @@ class Navbar extends React.Component {
 		);
 	}
 
+	// componentDidUpdate(prevProp, prevState){
+	// 	if(prevState.total !== this.state.total){
+	// 		this.setState({
+	// 			total: this.getTotalQuantity()
+	// 		})
+	// 	}
+	// }
+
 	render() {
 		const { handleClick, isLoggedIn, isAdmin } = this.props;
 		const totalBook = this.state.total;
-		// console.log("this.props", this.props)
+		console.log("this.state", this.state)
 
 		if (isLoggedIn && isAdmin) {
 			return (

@@ -4,14 +4,19 @@ import { fetchSingleBook } from '../store/singleBook';
 import { addBook } from '../store/cart';
 import CommentList from './CommentsList';
 import CommentForm from './CommentForm';
+import { cartItems } from '../store/cart';
+
 
 class SingleBook extends React.Component {
 	constructor() {
 		super();
 		this.addToCart = this.addToCart.bind(this);
+
 	}
 	componentDidMount() {
 		this.props.loadSingleBook(this.props.match.params.bookId);
+		this.props.cartItems();
+
 	}
 
 	addToCart() {
@@ -47,6 +52,7 @@ class SingleBook extends React.Component {
 	}
 
 	render() {
+
 		if (!this.props.book) {
 			return <h1>No book found</h1>;
 		}
@@ -80,14 +86,15 @@ const mapStateToProps = state => {
 	return {
 		book: state.book,
 		isLoggedIn: !!state.auth.id,
-		// users: state.users //need cart to be have backend to have info in []
+		cart: state.cart
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
 		loadSingleBook: bookId => dispatch(fetchSingleBook(bookId)),
-		addBook: book => dispatch(addBook(book))
+		addBook: book => dispatch(addBook(book)),
+		cartItems: () => dispatch(cartItems())
 	};
 };
 
