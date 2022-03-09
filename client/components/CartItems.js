@@ -1,15 +1,34 @@
 import React from 'react';
 
 function CartItems(props) {
-	return (
-		<div className="items__row">
-			<div className="items__left-container">
-				<img className="items__img" src={props.data.imageURL} />
-			</div>
-			<div className="items__right-container">
-				<h4 className="items__name">{props.data.name}</h4>
-				<div className="items__quantity-wrapper">
+	if (props.data) {
+		return (
+			<div className="items__row">
+				<div className="items__left-container">
+					<img className="items__img" src={ props.data.imageURL } />
+				</div>
+				<div className="items__right-container">
+					<h4 className="items__name">{props.data.name}</h4>
+					<div className="items__quantity-wrapper">
+						<button
+							onClick={() =>
+								props.quantityFn(props.quantity, 'increase', props.data)
+							}
+							type="button">
+							increase
+						</button>
+						<div className="items__quantity">{props.quantity}</div>
+						<button
+							onClick={() =>
+								props.quantityFn(props.quantity, 'decrease', props.data)
+							}
+							type="button">
+							decrease
+						</button>
+					</div>
+					<div className="items__price">${props.data.price}</div>
 					<button
+<<<<<<< HEAD
 						onClick={() =>
 							props.quantityFn(props.quantity, 'increase', props.data)
 						}
@@ -32,9 +51,19 @@ function CartItems(props) {
 					className="items__remove">
 					remove
 				</button>
+=======
+						onClick={() => props.removeBookFn(props.data)}
+						type="button"
+						className="items__remove">
+						remove
+					</button>
+				</div>
+>>>>>>> main
 			</div>
-		</div>
-	);
+		);
+	} else {
+		return null;
+	}
 }
 
 export default CartItems;
