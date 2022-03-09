@@ -7,72 +7,72 @@ import Checkout from './Checkout';
 import { cartItems, _clearBooks, addBook, removeBook, editQuantity } from '../store/cart';
 
 class Cart extends React.Component {
-    constructor() {
-        super();
-        this.state = { books: null, total: 0, checkout: false };
-        this.handleBooks = this.handleBooks.bind(this);
-        this.handleQuantity = this.handleQuantity.bind(this);
-        this.handleTotal = this.handleTotal.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
-        // this.handleCheckout = this.handleCheckout.bind(this);
-    }
-    componentDidMount() {
-        if (localStorage.getItem('token')) {
-            this.props.cartItems();
-            this.handleTotal();
-        }
-    }
-    componentDidUpdate(prvProps, prvState) {
-        if (prvProps.user.id !== this.props.user.id) {
-            if (prvState.total !== this.state.total) {
-                this.handleTotal();
-            }
-            this.props.cartItems();
-        }
-    }
-    componentWillUnmount() {
-        if (this.props.user.id) {
-            this.props.clearBooks();
-        }
-    }
-    handleBooks() {
-        return this.props.cart.map(obj => (
-            <CartItems
-                key={obj.id}
-                data={obj.book}
-                quantity={obj.quantity}
-                quantityFn={this.handleQuantity}
-                removeBookFn={this.handleDelete}
-            />
-        ));
-    }
-    handleTotal() {
-        /* Method sets state, returns null */
-        const priceReducer = books => {
-            const price = books.reduce((prv, cur) => {
-                console.log(prv);
-                console.log(cur);
-                return Number(prv) + Number(cur.price) * Number(cur.quantity);
-            }, 0);
-            return parseFloat(price).toFixed(2);
-        };
-        if (this.props.cart.length > 0) {
-            const total = priceReducer(this.props.cart);
-            console.log(total);
-            console.log(this.props.cart);
-            this.setState({ total: total });
-            return null;
-        }
-    }
-    handleQuantity(quantity, type, book) {
-        let editQuantity = 0;
-        if (type === 'increase') {
-            editQuantity = quantity + 1;
-        } else if (type === 'decrease') {
-            editQuantity = quantity - 1;
-        }
-        this.props.editQuantity(book, editQuantity);
-        // this.handleTotal();
+	constructor() {
+		super();
+		this.state = { books: null, total: 0, checkout: false };
+		this.handleBooks = this.handleBooks.bind(this);
+		this.handleQuantity = this.handleQuantity.bind(this);
+		this.handleTotal = this.handleTotal.bind(this);
+		this.handleDelete = this.handleDelete.bind(this);
+		// this.handleCheckout = this.handleCheckout.bind(this);
+	}
+	componentDidMount() {
+		this.props.cartItems();
+		this.handleTotal();
+	}
+	componentDidUpdate(prvProps, prvState) {
+		if (prvProps.user.id !== this.props.user.id) {
+			if (prvState.total !== this.state.total) {
+				this.handleTotal();
+			}
+			this.props.cartItems();
+		}
+	}
+	componentWillUnmount() {
+		if (this.props.user.id) {
+			this.props.clearBooks();
+		}
+	}
+	handleBooks() {
+		return this.props.cart.map(obj => (
+			<CartItems
+				key={obj.id}
+				data={obj.book}
+				quantity={obj.quantity}
+				quantityFn={this.handleQuantity}
+				removeBookFn={this.handleDelete}
+			/>
+		));
+	}
+
+	handleTotal() {
+		/* Method sets state, returns null */
+		const priceReducer = books => {
+			const price = books.reduce((prv, cur) => {
+				console.log(prv);
+				console.log(cur);
+				return Number(prv) + Number(cur.price) * Number(cur.quantity);
+			}, 0);
+			return parseFloat(price).toFixed(2);
+		};
+		if (this.props.cart.length > 0) {
+			const total = priceReducer(this.props.cart);
+			console.log(total);
+			console.log(this.props.cart);
+			this.setState({ total: total });
+			return null;
+		}
+	}
+
+	handleQuantity(quantity, type, book) {
+		let editQuantity = 0;
+		if (type === 'increase') {
+			editQuantity = quantity + 1;
+		} else if (type === 'decrease') {
+			editQuantity = quantity - 1;
+		}
+		this.props.editQuantity(book, editQuantity);
+		// this.handleTotal();
 		// this.props.cartItems();
     }
     handleDelete(book) {
@@ -116,19 +116,19 @@ class Cart extends React.Component {
 }
 
 const mapState = state => {
-    return {
-        user: state.auth,
-        cart: state.cart
-    };
+	return {
+		user: state.auth,
+		cart: state.cart
+	};
 };
 
 const mapDispatch = dispatch => {
-    return {
-        cartItems: () => dispatch(cartItems()),
-        clearBooks: () => dispatch(_clearBooks()),
-        deleteBook: book => dispatch(removeBook(book)),
-        editQuantity: (book, quantity) => dispatch(editQuantity(book, quantity))
-    };
+	return {
+		cartItems: () => dispatch(cartItems()),
+		clearBooks: () => dispatch(_clearBooks()),
+		deleteBook: book => dispatch(removeBook(book)),
+		editQuantity: (book, quantity) => dispatch(editQuantity(book, quantity))
+	};
 };
 
 export default connect(mapState, mapDispatch)(Cart);

@@ -3,14 +3,14 @@ import axios from 'axios';
 /* Action types. */
 const CART_ITEMS = 'CART_ITEMS';
 const CLEAR_BOOKS = 'CLEAR_BOOKS';
-const ADD_BOOK = 'ADD_BOOK';
+const ADD_BOOK_TO_CART = 'ADD_BOOK_TO_CART';
 const REMOVE_BOOK = 'REMOVE_BOOK';
 const EDIT_QUANTITY = 'EDIT_QUANTITY';
 
 /* Action creators. */
 const _cartItems = cartItems => ({ type: CART_ITEMS, cartItems });
 export const _clearBooks = () => ({ type: CLEAR_BOOKS });
-const _addBook = book => ({ type: ADD_BOOK, book });
+const _addBookToCart = book => ({ type: ADD_BOOK_TO_CART, book });
 const _removeBook = bookId => ({ type: REMOVE_BOOK, bookId });
 const _editQuantity = cartItem => ({ type: EDIT_QUANTITY, cartItem });
 
@@ -44,7 +44,7 @@ export const cartItems = () => {
     };
 };
 
-export const addBook = book => {
+export const addBookToCart = book => {
     return async dispatch => {
         const token = window.localStorage.getItem('token');
         if (token) {
@@ -53,13 +53,13 @@ export const addBook = book => {
                     authorization: token
                 }
             });
-            const action = _addBook(newBook);
+            const action = _addBookToCart(newBook);
             dispatch(action);
             return;
         } else {
             if (localStorage.getItem('temp')) {
-                const books = JSON.parse(window.localStorage.getItem('temp'));
-                const action = _addBook(books);
+                const books = JSON.parse(localStorage.getItem('temp'));
+                const action = _addBookToCart(books);
                 dispatch(action);
             }
         }
@@ -114,9 +114,10 @@ export const editQuantity = (book, quantity) => {
 					          book,
 					          book_id: book.id,
 					          quantity: quantity
-				    }
-                const action = _editQuantity(updatedBook);
-                dispatch(action);
+                }
+				       
+            const action = _editQuantity(updatedBook);
+            dispatch(action);
             }
         }
     };
@@ -130,10 +131,13 @@ function cartReducer(state = init, action) {
             return [...action.cartItems];
         case CLEAR_BOOKS:
             return [];
-        case ADD_BOOK:
+        case ADD_BOOK_TO_CART:
             return [...state, action.book];
         case REMOVE_BOOK:
-            return state.filter(book => book.id !== action.bookId);
+			// console.log('ACTION BOOKID---->', action.bookId)
+			// console.log('STATE ---->', state);
+            return state.filter(book => book.book_id !== action.bookId);
+			// console.log('NEW BOOK ------>', newBooks)
         case EDIT_QUANTITY:
             return state.map(cartItem => (
 				cartItem.book_id === action.cartItem.book_id ? action.cartItem : cartItem
