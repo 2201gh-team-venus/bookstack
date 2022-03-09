@@ -2,16 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchBooks } from '../store/books';
+import { cartItems } from '../store/cart';
 
 export class AllBooks extends React.Component {
 	componentDidMount() {
 		this.props.loadBooks();
+		this.props.cartItems();
 	}
 	render() {
 		if (!this.props.books || this.props.books.length === 0) {
 			return <h1>No Books!</h1>;
 		}
-		
+
 		return (
 			<div>
 				<h1>All Books</h1>
@@ -31,13 +33,17 @@ export class AllBooks extends React.Component {
 	}
 }
 
-const mapStateToProps = ({ books }) => {
-	return { books };
+const mapStateToProps = (state) => {
+	return {
+		books: state.books,
+		cart: state.cart
+	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		loadBooks: () => dispatch(fetchBooks())
+		loadBooks: () => dispatch(fetchBooks()),
+		cartItems: () => dispatch(cartItems())
 	};
 };
 
