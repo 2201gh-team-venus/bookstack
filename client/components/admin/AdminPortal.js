@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 const AdminPortal = () => {
 	return (
 		<div>
+			<br />
 			<Link to="/users">
 				<button type="button">View User Information</button>
 			</Link>
