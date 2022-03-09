@@ -74,45 +74,45 @@ class Cart extends React.Component {
 		this.props.editQuantity(book, editQuantity);
 		// this.handleTotal();
 		// this.props.cartItems();
-	}
-	handleDelete(book) {
-		this.props.deleteBook(book);
-	}
-	handleCheckout() {
-		this.setState({ checkout: true });
-	}
-	render() {
-		console.log(this.props);
-		return this.state.checkout ? (
-			<Checkout books={this.state.books} total={this.state.total} />
-		) : (
-			<div className="cart">
-				<h3>
-					{this.props.user.username ? this.props.user.username : 'Visitor'} 's
-					books
-				</h3>
-				<div className="items">{this.handleBooks()}</div>
-				<div className="cart-total">
-					<h4 className="cart-total__text">Total</h4>
-					<h4 className="cart-total__amount">${this.state.total}</h4>
-				</div>
-				<div className="cart-checkout">
-					{this.props.user.id ? '' : 'Not logged in. You are ordering as guest'}
-					<button
-						disabled={
-							this.state.books === null || this.state.books.length === 0
-								? true
-								: false
-						}
-						onClick={this.handleCheckout}
-						className="cart-checkout__btn"
-						type="button">
-						Checkout
-					</button>
-				</div>
-			</div>
-		);
-	}
+    }
+    handleDelete(book) {
+        this.props.deleteBook(book);
+    }
+    handleCheckout() {
+        this.setState({ checkout: true });
+    }
+
+    render() {
+
+        return this.state.checkout ? (
+            <Checkout books={this.state.books} total={this.state.total} />
+        ) : (
+            <div className="cart">
+                <h2 className='guest-checkout__heading'>
+                    {this.props.user.username ? `${this.props.user.username}'s cart` : 'Guest Checkout'}
+                </h2>
+                <div className="items">{this.handleBooks()}</div>
+                <div className="cart-total">
+                    <h3 className="cart-total__text">Total</h3>
+                    <h4 className="cart-total__amount">${this.state.total}</h4>
+                </div>
+                <div className="cart-checkout">
+                    {this.props.user.id ? '' : 'You are not currently logged in.  Click checkout to complete your order as guest.  Thank you for shopping at Bookstack!  '}
+                    <button
+                        disabled={
+                            this.state.books === null || this.state.books.length === 0
+                                ? true
+                                : false
+                        }
+                        onClick={this.handleCheckout}
+                        className="cart-checkout__btn"
+                        type="button">
+                        Checkout
+                    </button>
+                </div>
+            </div>
+        );
+    }
 }
 
 const mapState = state => {

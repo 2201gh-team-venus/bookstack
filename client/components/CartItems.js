@@ -8,22 +8,22 @@ function CartItems(props) {
 					<img className="items__img" src={ props.data.imageURL } />
 				</div>
 				<div className="items__right-container">
-					<h4 className="items__name">{props.data.name}</h4>
+					<h2 className="items__name">{props.data.name}</h2>
 					<div className="items__quantity-wrapper">
-						<button
+						<button className='increase__button'
 							onClick={() =>
 								props.quantityFn(props.quantity, 'increase', props.data)
 							}
 							type="button">
-							increase
+							+
 						</button>
 						<div className="items__quantity">{props.quantity}</div>
-						<button
+						<button className='decrease__button'
 							onClick={() =>
 								props.quantityFn(props.quantity, 'decrease', props.data)
 							}
 							type="button">
-							decrease
+							-
 						</button>
 					</div>
 					<div className="items__price">${props.data.price}</div>
@@ -31,7 +31,7 @@ function CartItems(props) {
 						onClick={() => props.removeBookFn(props.data)}
 						type="button"
 						className="items__remove">
-						remove
+						Remove
 					</button>
 				</div>
 			</div>
