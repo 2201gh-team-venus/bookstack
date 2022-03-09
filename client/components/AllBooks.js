@@ -11,6 +11,7 @@ export class AllBooks extends React.Component {
 		if (!this.props.books || this.props.books.length === 0) {
 			return <h1>No Books!</h1>;
 		}
+		console.log("this.props.cart", this.props.cart)
 		return (
 			<div>
 				<h1>All Books</h1>
@@ -36,7 +37,7 @@ const mapStateToProps = ({ books }) => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		loadBooks: () => dispatch(fetchBooks())
+		loadBooks: () => dispatch(fetchBooks()),
 	};
 };
 

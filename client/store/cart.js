@@ -117,7 +117,7 @@ export const editQuantity = (book, quantity) => {
 const init = [];
 
 function cartReducer(state = init, action) {
-	console.log('state-->', state);
+	// console.log('state-->', state);
     switch (action.type) {
         case CART_ITEMS:
             return [...action.cartItems];

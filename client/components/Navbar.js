@@ -13,50 +13,48 @@ class Navbar extends React.Component {
 		this.getTotalQuantity = this.getTotalQuantity.bind(this);
 	}
 
+
 	getTotalQuantity() {
-		const books = JSON.parse(window.localStorage.getItem('temp'));
-		console.log(books);
+		// const books = JSON.parse(window.localStorage.getItem('temp'));
+		// console.log("this.props", this.props)
+		console.log("this.props.cart", this.props.cart)
+
+		
 		let sum = 0;
-		if (books) {
-			books.map(book => (sum += book.quantity));
-			console.log('sum', sum);
-			return sum;
-		}
-		// else {
-
-		// 	const signedInBooks=  this.props.cart
-
-		// 	if(signedInBooks){
-		// 	signedInBooks.map(book => (sum += book.cart_item.quantity));
-		// 	console.log("sum in signned in", sum)
+		let sum1= 0;
+		// if (books) {
+		// 	books.map(book => (sum += book.quantity));
+		// 	console.log('Im in localstorage', sum);
 		// 	return sum;
-		// 	}
 		// }
+	// 	else {
+			const signedInBooks=  this.props.cart
+			console.log("signnedINBooks", signedInBooks)
+
+			if(signedInBooks){
+			signedInBooks.map(book => (sum1 += book.quantity));
+			console.log("sum1===>",sum1)
+			return sum1;
+			}
+	// 	}
 	}
 
 	componentDidMount() {
+		console.log("component did mount!")
 		setInterval(
 			() =>
-				this.setState({
-					total: this.getTotalQuantity()
-				}),
+		this.setState({
+			total: this.getTotalQuantity()
+		}),
 			500
 		);
 	}
 
-	// componentDidUpdate(prevProp, prevState) {
-
-	// 	// if (this.state.total !== prevProp.localBooks.total) {
-	// 	// 	this.setState({
-	// 	// 		total: this.getTotalQuantity()
-	// 	// 	});
-	// 	// }
-	// }
-
 	render() {
-		console.log('this.state===>', this.state);
 		const { handleClick, isLoggedIn, isAdmin } = this.props;
 		const totalBook = this.state.total;
+		// console.log("this.props", this.props)
+
 		if (isLoggedIn && isAdmin) {
 			return (
 				<div>
@@ -76,9 +74,13 @@ class Navbar extends React.Component {
 				</div>
 			);
 		}
-		// if(isLoggedIn){
-		// console.log('this.props.cart', this.props.cart[0]);
+		// if (isLoggedIn) {
+		// 	console.log('this.props.cart', this.props.cart);
 		// }
+		// let books = this.props.cart;
+		// let num = 0;
+		// let bookNum = books.map(book => (num += book.quantity));
+		// console.log("num", num)
 
 		return (
 			<div>
@@ -89,7 +91,7 @@ class Navbar extends React.Component {
 							{/* The navbar will show these links after you log in */}
 							<Link to="/home">Home</Link>
 							<Link to="/books">Shop All Books</Link>
-							<Link to="/cart">Cart</Link>
+							<Link to="/cart">{`Cart(${this.state.total})`}</Link>
 							<a href="#" onClick={handleClick}>
 								Logout
 							</a>
