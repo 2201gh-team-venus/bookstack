@@ -38,6 +38,7 @@ class AddBook extends React.Component {
 		return (
 			<div>
 				<form className="add-book-form">
+					<br />
 					<label htmlFor="bookName">Title: </label>
 					<input
 						className="book-name"
@@ -45,7 +46,7 @@ class AddBook extends React.Component {
 						value={name}
 						onChange={handleChange}
 					/>
-
+					<br />
 					<label htmlFor="imageURL">Image URL: </label>
 					<input
 						className="book-imageURL"
@@ -53,7 +54,7 @@ class AddBook extends React.Component {
 						value={imageURL}
 						onChange={handleChange}
 					/>
-
+					<br />
 					<label htmlFor="description">Description: </label>
 					<textarea
 						className="book-description"
@@ -61,7 +62,7 @@ class AddBook extends React.Component {
 						value={description}
 						onChange={handleChange}
 					/>
-
+					<br />
 					<label htmlFor="price">Price: </label>
 					<input
 						className="book-price"
@@ -69,7 +70,7 @@ class AddBook extends React.Component {
 						value={price}
 						onChange={handleChange}
 					/>
-
+					<br />
 					<label htmlFor="inventory">Inventory: </label>
 					<input
 						className="book-inventory"
@@ -77,7 +78,7 @@ class AddBook extends React.Component {
 						value={inventory}
 						onChange={handleChange}
 					/>
-
+					<br />
 					<label htmlFor="authorName">Author: </label>
 					<input
 						className="author-name"
@@ -85,7 +86,7 @@ class AddBook extends React.Component {
 						value={authorName}
 						onChange={handleChange}
 					/>
-
+					<br />
 					<label htmlFor="authorBio">Author's Bio: </label>
 					<textarea
 						className="author-bio"
@@ -94,7 +95,7 @@ class AddBook extends React.Component {
 						onChange={handleChange}
 					/>
 				</form>
-
+				<br />
 				<div>
 					<button className="add-book-button" type="submit" onClick={handleSubmit}>
 						Add Book
