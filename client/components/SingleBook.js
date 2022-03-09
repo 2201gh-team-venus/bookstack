@@ -86,7 +86,12 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 	return {
 		loadSingleBook: bookId => dispatch(fetchSingleBook(bookId)),
+<<<<<<< Updated upstream
 		addBookToCart: book => dispatch(addBookToCart(book))
+=======
+		addBookToCart: book => dispatch(addBookToCart(book)),
+		cartItems: () => dispatch(cartItems())
+>>>>>>> Stashed changes
 	};
 };
 
